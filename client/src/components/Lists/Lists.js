@@ -17,6 +17,7 @@ const Lists = ({ location }) => {
   const [description, setDescription] = useState('');
   const [listType, setListType] = useState('');
   const [media, setMedia] = useState([]);
+  const [updatedItems, setUpdatedItems] = useState('');
   // TODO: Remove values after finished working on this page
   const [listItems, setListItems] = useState([
     {
@@ -167,6 +168,7 @@ const Lists = ({ location }) => {
         setDescription(data.description);
         setListType(data.list_type);
         setMedia(data.media);
+        setUpdatedItems(data.updated_items);
       }
       setLoading(false);
     }
@@ -177,6 +179,7 @@ const Lists = ({ location }) => {
       setDescription(state.description);
       setListType(state.listType);
       setMedia(state.media);
+      setUpdatedItems(state.updatedItems);
       setLoading(false);
       return;
     }
@@ -195,6 +198,7 @@ const Lists = ({ location }) => {
         description,
         listType,
         media,
+        updatedItems,
       }
     });
   }

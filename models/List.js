@@ -7,6 +7,7 @@ const ListSchema = new Schema(
     subtitle: String,
     description: String,
     list_type: String,
+    updated_items: Date,
     media: [{
       type: Schema.Types.ObjectId, ref: 'Media'
     }],

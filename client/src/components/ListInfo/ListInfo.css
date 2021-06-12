@@ -97,6 +97,32 @@
   text-transform: uppercase;
 }
 
+.list-info-update-container {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.list-info-update-container .list-info-stats-container {
+  margin: 0;
+  width: 50%;
+}
+
+.list-info-update-button {
+  width: 50%;
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 4rem;
+  border: 0.4rem solid transparent;
+  background-color: var(--container-color);
+  transition: 0.2s ease-in-out;
+}
+
+.list-info-update-button:hover {
+  background-color: var(--background-color-brighter);
+  border: 0.4rem solid var(--container-color);
+}
+
 .list-info-media-items-container {
   margin-top: 2rem;
 }

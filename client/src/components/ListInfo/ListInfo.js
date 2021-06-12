@@ -12,6 +12,7 @@ const ListInfo = ({ location }) => {
   const [topBannerInfo, setTopBannerInfo] = useState({});
   const [listItems, setListItems] = useState({});
   const [media, setMedia] = useState([]);
+  const [updatedItems, setUpdatedItems] = useState('');
   const [listType, setListType] = useState('');
   const [description, setDescription] = useState('');
   const { id } = useParams();
@@ -27,6 +28,7 @@ const ListInfo = ({ location }) => {
         setDescription(data.description);
         setListType(data.list_type);
         setMedia(data.media);
+        setUpdatedItems(data.updated_items);
       }
       setLoading(false);
     }
@@ -37,6 +39,7 @@ const ListInfo = ({ location }) => {
       setDescription(state.description);
       setListType(state.listType);
       setMedia(state.media);
+      setUpdatedItems(state.updatedItems);
       setLoading(false);
       return;
     }
@@ -55,6 +58,7 @@ const ListInfo = ({ location }) => {
         description,
         listType,
         media,
+        updatedItems,
       }
     });
   }
@@ -66,6 +70,15 @@ const ListInfo = ({ location }) => {
   const getUnrankedItems = () => listItems.reduce((total, curr) => {
     return curr.rank === null ? total += 1 : total;
   }, 0);
+
+  const updateListItems = async () => {
+    const { data } = await axios.put(`/api/lists/update/${id}`, {
+      media,
+      listType,
+      listItems,
+    });
+    console.log('response:', data);
+  }
 
   return (
     <>
@@ -99,6 +112,21 @@ const ListInfo = ({ location }) => {
             <h4 className="list-info-stats-title">Unranked</h4>
           </div>
         </div>
+
+        <div className="list-info-update-container">
+          <div className="list-info-stats-container">
+            <div className="list-info-stats">
+            <div className="media-page-right-time-container">
+                  <h3 className="media-page-right-stats-date">{dateFormat(updatedItems, "UTC:m/d/yy")}</h3>
+                  <h4 className="media-page-right-stats-time">{dateFormat(updatedItems, "h:MM:ss TT")}</h4>
+                </div>
+              <h4 className="list-info-stats-title">Last Updated</h4>
+            </div>
+          </div>
+
+          <button className="list-info-update-button" onClick={updateListItems}>Update</button>
+        </div>
+
 
         <div className="list-info-media-items-container">
           <h3 className="list-info-media-items-title">Media in this list</h3>

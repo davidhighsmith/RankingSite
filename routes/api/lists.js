@@ -87,14 +87,39 @@ const saveList = async (id, newList) => {
   }
 }
 
+const updateListInfoSingleSeason = async (media, listItems) => {
+  const season = listItems[0].season_number;
+  const moviedb_id = media[0].moviedb_id;
+
+  const newEpisodes = await getSeasonEpisodes(moviedb_id, season);
+
+  newEpisodes.forEach((item, index) => {
+    // TODO: Create new list items array
+  })
+
+  return newEpisodes;
+}
+
 // List search
 router.get('/search', async (req, res) => {
   const { search, searchFor } = req.query;
   const result = await listSearchByValue(search, searchFor);
-  res.send(result);
+  return res.send(result);
 });
 
-// update list
+router.put('/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const { media, listType, listItems } = req.body;
+
+  // Single season list
+  if (listType === listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES) {
+    const newList = await updateListInfoSingleSeason(media, listItems);
+    return res.send(newList);
+  }
+  return res.send('list type not implemented yet');
+});
+
+// update list, rankings change
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const newList = req.body;
@@ -146,6 +171,7 @@ router.post('/', async (req, res) => {
       subtitle: info.subtitle !== '' ? info.subtitle : `Season ${options.selectedSeason}` ,
       description: info.description !== '' ? info.description : `List for season ${options.selectedSeason} of ${info.title}.`,
       list_type: listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES,
+      updated_items: Date.now(),
       media: [info._id],
       list: createSeasonEpisodeList(data.episodes, info._id),
     });
