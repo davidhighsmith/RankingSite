@@ -1,0 +1,61 @@
+:root {
+  --background-color: #121619;
+  --background-color-brighter: #1a2025;
+  --container-color: #20272c;
+  --editor-color: #363d41;
+
+  --white: #efefef;
+  --dark-white: #d8d8d8;
+  --darker-white: #d1d1d1;
+  --darker-heading: #a6a6a6;
+
+  --spacer: #323b3f;
+
+  --box-shadow: rgba(0, 0, 0, 0.16) 0px 0.3rem 0.6rem,
+    rgba(0, 0, 0, 0.23) 0px 0.3rem 0.6rem;
+
+  --light-box-shadow: rgba(0, 0, 0, 0.16) 0px 0.1rem 0.4rem;
+
+  --green: #3bd16f;
+  --dark-green: #2ea758;
+  --darker-green: #218544;
+  --red: #d43e3e;
+  --dark-red: #b13333;
+
+  --sign-size: 0.6rem;
+  --sign-position: 0.8rem;
+
+  --gap: 1.5rem;
+
+  --border-radius: 0.5rem;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  color: var(--white);
+  background-color: var(--background-color);
+  box-sizing: border-box;
+}
+
+button, input {
+  font: inherit;
+}
+
+@media only screen and (min-width: 2550px) {
+  html {
+    font-size: 78.125%;
+  }
+}

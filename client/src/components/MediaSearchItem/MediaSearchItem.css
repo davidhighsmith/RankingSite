@@ -1,0 +1,67 @@
+.media-search-item {
+  position: relative;
+}
+
+.media-search-item-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.media-search-item-info-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.media-search-item:hover .media-search-item-info-container {
+  opacity: 1;
+  background-color: rgba(0,0,0,0.85);
+}
+
+.media-search-item-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  text-align: center;
+}
+
+.media-search-item-title,
+.media-search-item-year {
+  line-height: 1;
+  transition: 0.2s ease-in-out;
+}
+
+.media-search-item-title {
+  font-size: 2.5rem;
+  color: var(--white);
+  text-transform: uppercase;
+  padding-bottom: 0.4rem;
+}
+
+.media-search-item-year {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--darker-white);
+}
+
+
+
+.media-search-item-dumby .media-search-item-img {
+  opacity: 0;
+}
+
+.media-search-item-dumby .media-search-item-info-container {
+  opacity: 0;
+}
+
+.media-search-item.media-search-item-dumby:hover .media-search-item-info-container {
+  background-color: rgba(0,0,0,0);
+
+}

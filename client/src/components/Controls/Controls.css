@@ -1,0 +1,33 @@
+.controls-container {
+  display: flex;
+  align-self: stretch;
+  flex-direction: row;
+}
+
+.controls-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.controls-buttons button {
+  flex: 1 0 0;
+  border: none;
+  cursor: pointer;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-white);
+  background-color: var(--editor-color);
+}
+
+.controls-buttons button:first-of-type {
+  border-top-right-radius: var(--border-radius);
+}
+
+.controls-buttons button:last-of-type {
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.controls-buttons button:hover {
+  background-color: var(--background-color-brighter);
+}

@@ -1,0 +1,96 @@
+.media-page-right-create-list-container {
+  width: 80%;
+}
+
+.media-page-right-create-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.media-page-right-create-list-select {
+  width: 30%;
+  margin-top: 1.5rem;
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__control {
+  border: none;
+  border-radius: 0;
+  background-color: var(--container-color);
+  height: 5rem;
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__placeholder {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--darker-heading);
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__single-value {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--darker-white);
+  text-transform: uppercase;
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__indicator-separator {
+  background-color: var(--spacer);
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__menu-list {
+  background-color: var(--background-color-brighter);
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__option {
+  background-color: var(--background-color-brighter);
+  font-size: 1.6rem;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.media-page-right-create-list-select
+.media-page-right-create-list-select__option:hover {
+  background-color: var(--container-color);
+}
+
+.media-page-right-create-list-submit {
+  margin-top: 1.5rem;
+  width: 14rem;
+}
+
+.media-page-right-create-list-submit:disabled {
+  color: #4b4b4b;
+  cursor: not-allowed;
+}
+
+.media-page-right-create-list-submit:disabled:hover {
+  background-color: var(--background-color-brighter);
+}
+
+.list-options-button-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.list-options-button-container .media-search-button {
+  background-color: var(--background-color-brighter);
+  text-align: center;
+}
+
+.list-options-button-container .media-search-button:hover {
+  background-color: var(--container-color);
+}
+
+.list-options-button-container .media-search-button-active {
+  background-color: var(--dark-white);
+}
+
+.list-options-button-container .media-search-button-active:hover {
+  background-color: var(--white);
+}

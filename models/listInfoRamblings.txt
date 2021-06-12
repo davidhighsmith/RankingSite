@@ -1,0 +1,19 @@
+list info contains
+
+title
+optional subtitle
+list type
+
+media in list
+
+EACH ITEM NEEDS:
+order       - when to add to list
+title       - name of item
+description - plot summary
+thumbnail   - image to use (poster for movie list, 16x9 image for anything else)
+rank        - list item rank
+additional info {
+  media_id  - DO NOT MAKE A REF, used to get name of show/movie in multi list
+  season #  - for tv shows in multi season lists
+  episode # - for tv shows in any situation
+}

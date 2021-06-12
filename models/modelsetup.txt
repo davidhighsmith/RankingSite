@@ -1,0 +1,29 @@
+mongodb setup
+
+const listTypes = {
+    TV = 'TV',
+    Movie = 'Movie',
+    Combo = 'Combo'
+}
+
+ADD A CONTROLS SECTION TO THE LIST TO PASS TO MOVIEDB AND REACT APP
+
+lists {
+    title: {
+        type: String,
+        required: true
+    }
+    subtitle: {
+        type: String
+    }
+    listType: {
+        type: String,
+        enum: Object.values(listTypes)
+    }
+    list: [{
+        episode_number: Number,
+        episode_title: Number,
+        episode_description: Number,
+        episode_rank: Number
+    }]
+}

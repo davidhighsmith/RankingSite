@@ -1,0 +1,26 @@
+.nav-links {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-links a {
+  flex: 1;
+  text-align: center;
+  background-color: var(--container-color);
+  padding: 2rem 0;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 2rem;
+  transition: 0.2s ease-in-out;
+  text-transform: uppercase;
+}
+
+.nav-links a:not(.active):hover {
+  background-color: var(--background-color-brighter);
+}
+
+.nav-links .active {
+  background-color: var(--background-color);
+}

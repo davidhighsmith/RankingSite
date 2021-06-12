@@ -1,0 +1,69 @@
+.list-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--container-color);
+  text-decoration: none;
+  padding: 1.5rem;
+  transition: 0.2s ease-in-out;
+}
+
+.list-card:hover {
+  background-color: var(--background-color-brighter);
+}
+
+.list-card-title,
+.list-card-subtitle,
+.list-card-time-header,
+.list-card-update-time {
+  line-height: 1;
+}
+
+.list-card-title {
+  color: var(--white);
+  text-transform: uppercase;
+  font-size: 2.5rem;
+  letter-spacing: 0.04rem;
+}
+
+.list-card-title.list-card-no-subtitle {
+  line-height: 48px;
+}
+
+.list-card-subtitle {
+  color: var(--darker-white);
+  font-weight: 300;
+  font-size: 1.8rem;
+  padding-top: 0.5rem;
+}
+
+.list-card-no-main-title {
+  font-weight: 300;
+  text-transform: none;
+}
+
+.list-card-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.list-card-time-header {
+  color: var(--white);
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.list-card-update-time {
+  color: var(--darker-white);
+  font-size: 1.6rem;
+  font-weight: 300;
+  padding-top: 0.5rem;
+}
+
+@media only screen and (min-width: 2550px) {
+  .list-card-title.list-card-no-subtitle {
+    line-height: 59.25px;
+  }
+}

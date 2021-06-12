@@ -1,0 +1,128 @@
+import { useEffect, useState } from 'react';
+import { withRouter, useParams, useHistory, Link } from 'react-router-dom';
+import dateFormat from 'dateformat';
+import { baseImage } from '../../utils/theMovieDBBaseURL';
+import placeholder from '../../images/placeholder-600x900.jpg';
+import Nav from '../Nav/Nav';
+import './ListInfo.css';
+import { instance as axios } from '../../utils/axios';
+
+const ListInfo = ({ location }) => {
+  const [loading, setLoading] = useState(true);
+  const [topBannerInfo, setTopBannerInfo] = useState({});
+  const [listItems, setListItems] = useState({});
+  const [media, setMedia] = useState([]);
+  const [listType, setListType] = useState('');
+  const [description, setDescription] = useState('');
+  const { id } = useParams();
+  const history = useHistory();
+  const { state } = location;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(`/api/lists/${id}`);
+      if (!data.message) {
+        setListItems(data.list);
+        setTopBannerInfo({ title: data.title, subtitle: data.subtitle });
+        setDescription(data.description);
+        setListType(data.list_type);
+        setMedia(data.media);
+      }
+      setLoading(false);
+    }
+    
+    if (state) {
+      setListItems(state.listItems);
+      setTopBannerInfo(state.topBannerInfo);
+      setDescription(state.description);
+      setListType(state.listType);
+      setMedia(state.media);
+      setLoading(false);
+      return;
+    }
+
+    fetchData();
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  []);
+
+  const goToListPage = () => {
+    history.push({
+      pathname: `/lists/${id}`, 
+      state: {
+        listItems,
+        topBannerInfo,
+        description,
+        listType,
+        media,
+      }
+    });
+  }
+
+  const getTotalItems = () => listItems.length;
+  const getRankedItems = () => listItems.reduce((total, curr) => {
+    return curr.rank !== null ? total += 1 : total;
+  }, 0);
+  const getUnrankedItems = () => listItems.reduce((total, curr) => {
+    return curr.rank === null ? total += 1 : total;
+  }, 0);
+
+  return (
+    <>
+    {loading ? <div>Loading</div> : 
+      <div>
+      <Nav active="lists" />
+
+      <div className="list-info-container">
+
+        <div className="list-info-top-banner-container">
+          <div className="list-info-top-banner">
+            <h1 className="list-info-top-banner-title">{topBannerInfo.title}</h1>
+            <h3 className="list-info-top-banner-subtitle">{topBannerInfo.subtitle}</h3>
+          </div>
+          <div className="list-info-top-banner-right">
+            <button className="list-info-top-banner-return" onClick={goToListPage}>Return to List</button>
+          </div>
+        </div>
+
+        <div className="list-info-stats-container">
+          <div className="list-info-stats">
+            <h3 className="list-info-stats-count">{getTotalItems()}</h3>
+            <h4 className="list-info-stats-title">Total Items</h4>
+          </div>
+          <div className="list-info-stats">
+            <h3 className="list-info-stats-count">{getRankedItems()}</h3>
+            <h4 className="list-info-stats-title">Ranked</h4>
+          </div>
+          <div className="list-info-stats">
+            <h3 className="list-info-stats-count">{getUnrankedItems()}</h3>
+            <h4 className="list-info-stats-title">Unranked</h4>
+          </div>
+        </div>
+
+        <div className="list-info-media-items-container">
+          <h3 className="list-info-media-items-title">Media in this list</h3>
+          <div className="list-info-media-items">
+            {media.map(item => (
+              <Link to={`/media/${item._id}`} className="list-info-media-item" key={item._id}>
+                <img src={`${item.poster_path ? `${baseImage}${item.poster_path}` : placeholder}`} alt={item.title} className="list-info-media-items-img" />
+                <div className="media-search-item-info-container">
+                  <div className="media-search-item-info">
+                    <h3 className="media-search-item-title">{item.title}</h3>
+                    <h4 className="media-search-item-year">({dateFormat(item.release_date, "yyyy")})</h4>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    }
+    </>
+  )
+};
+
+export default withRouter(ListInfo);

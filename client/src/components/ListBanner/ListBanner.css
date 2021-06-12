@@ -1,0 +1,27 @@
+.list-banner-container {
+  padding: 1.5rem 2rem;
+}
+
+.list-banner-title {
+  font-size: 8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  line-height: 1;
+}
+
+.list-banner-title.list-banner-title-full {
+  line-height: 102px;
+}
+
+.subtitle-title {
+  line-height: 1;
+  font-weight: 300;
+  font-size: 2.2rem;
+  color: var(--darker-white);
+}
+
+@media only screen and (min-width: 2550px) {
+  .list-banner-title.list-banner-title-full {
+    line-height: 127px;
+  }
+}

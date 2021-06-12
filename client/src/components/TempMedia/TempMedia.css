@@ -1,0 +1,43 @@
+.media-return-to-search-container {
+  display: flex;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.media-return-to-search {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 2rem;
+}
+
+.media-return-to-search,
+.temp-page-add-button {
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: var(--container-color);
+  color: var(--dark-white);
+  transition: 0.2s ease-in-out;
+}
+ 
+.media-page-right-description-container.temp-page {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.temp-page-add-button-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.temp-page-add-button {
+  padding: 2rem 3rem;
+  font-size: 3rem;
+}
+
+.temp-page-add-button:hover,
+.temp-media-return-to-search:hover {
+  background-color: var(--background-color-brighter);
+}

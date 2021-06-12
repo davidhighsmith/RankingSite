@@ -1,0 +1,126 @@
+.list-create-form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5rem auto 0;
+  width: 30%;
+}
+
+.list-create-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-create-form-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.list-options-button-container.list-create {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.list-options-button-container.list-create .media-search-button {
+  border-radius: var(--border-radius);
+}
+
+.list-create-form label {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--darker-white);
+}
+
+.list-create-form-text-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 2rem;
+  font-weight: 300;
+  outline: none;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+}
+
+.list-create-form-text-input:disabled {
+  cursor: not-allowed;
+  color: #000;
+  background-color: rgb(109, 109, 109);
+}
+
+.list-create-form-dropdown {
+  display: flex;
+  justify-content: center;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select__control {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  height: 4.4rem;
+  font-size: 2rem;
+  text-transform: none;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select__placeholder {
+  color: #222;
+  font-size: 2rem;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select__single-value {
+  color: #050505;
+  font-size: 2rem;
+  text-transform: none;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select__dropdown-indicator {
+  color: #222;
+}
+
+.list-create-form-dropdown
+.media-page-right-create-list-select__dropdown-indicator:hover {
+  color: #222;
+}
+
+.list-create-form-textarea {
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius);
+  height: 14.2rem;
+  font: inherit;
+  font-size: 2rem;
+  font-weight: 300;
+  padding: 0.7rem 1rem;
+  resize: none;
+}
+
+.list-create-form-submit {
+  margin-top: 1rem;
+  width: 50%;
+  align-self: center;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 2.6rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  padding: 1.2rem 0;
+  line-height: 1;
+  background-color: var(--darker-white);
+  transition: background-color 0.1s ease-in-out;
+}
+
+.list-create-form-submit:hover {
+  background-color: var(--white);
+  font-weight: 400;
+}

@@ -1,0 +1,169 @@
+.media-page-container {
+  display: flex;
+  margin: 2rem auto 2rem;
+  width: 70%;
+  gap: 2rem;
+}
+
+.media-page-left-container {
+  flex-basis: 30%;
+}
+
+.media-page-right-container {
+  flex-basis: 70%;
+}
+
+.media-page-left-poster {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.media-page-right-title-container {
+  background-color: var(--container-color);
+  padding: 2rem 1.5rem;
+}
+
+.media-page-right-title,
+.media-page-right-year {
+  line-height: 1;
+  display: inline-block;
+}
+
+.media-page-right-title {
+  font-size: 3.5rem;
+  font-weight: 400;
+}
+
+.media-page-right-year {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--darker-heading);
+  padding-left: 1rem;
+}
+
+.media-page-right-description-container {
+  background-color: var(--background-color-brighter);
+  padding: 2rem 1.5rem;
+}
+
+.media-page-right-description-header {
+  line-height: 1;
+  color: var(--darker-heading);
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.media-page-right-description {
+  font-size: 1.8rem;
+  padding-top: 1rem;
+  color: var(--darker-white);
+}
+
+.media-page-right-stats-container {
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--background-color-brighter);
+}
+
+.media-page-right-stats-container.movie {
+  padding: 1.5rem 0;
+}
+
+.media-page-right-stats {
+  flex: 1 0 0;
+  text-align: center;
+  position: relative;
+}
+
+.media-page-right-stats:not(:last-of-type)::after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 7%;
+  bottom: 7%;
+  width: 0.2rem;
+  background-color: var(--spacer);
+}
+
+.media-page-right-stats-count,
+.media-page-right-stats-title {
+  line-height: 1;
+}
+
+.media-page-right-stats-count {
+  font-size: 4rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.media-page-right-stats-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--darker-heading);
+  text-transform: uppercase;
+}
+
+.media-page-right-time-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+.media-page-right-stats-date {
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 1;
+  padding-bottom: 0.3rem;
+}
+
+.media-page-right-stats-time {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.media-page-right-button-center-container {
+  display: flex;
+  width: 100%;
+  margin-top: 3rem;
+  justify-content: center;
+}
+
+.media-page-right-button-container {
+  display: flex;
+  width: 70%;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.media-page-right-button {
+  flex: 1 0 0;
+  cursor: pointer;
+  border: none;
+  padding: 1.5rem;
+  background-color: var(--background-color-brighter);
+  color: var(--white);
+  font-size: 2rem;
+  font-weight: 300;
+  transition: 0.2s ease-in-out;
+}
+
+.media-page-right-button:hover {
+  background-color: var(--container-color);
+}
+
+.media-page-right-bottom-outer-container {
+  --list-gap: 0.2rem;
+
+  display: flex;
+  width: 100%;
+  margin-top: 3rem;
+  justify-content: center;
+}

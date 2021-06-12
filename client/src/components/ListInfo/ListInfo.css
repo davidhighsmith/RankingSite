@@ -1,0 +1,132 @@
+.list-info-container {
+  display: flex;
+  margin: 2rem auto 0;
+  width: 50%;
+  flex-direction: column;
+}
+
+.list-info-top-banner-container {
+  background-color: var(--container-color);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.list-info-top-banner {
+  padding: 1.5rem 2rem;
+}
+
+.list-info-top-banner-title {
+  font-size: 4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  line-height: 1;
+}
+
+.list-info-top-banner-subtitle {
+  line-height: 1;
+  font-weight: 300;
+  font-size: 1.8rem;
+  color: var(--darker-white);
+  padding-top: 0.2rem;
+}
+
+.list-info-top-banner-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-info-top-banner-return {
+  flex: 1 0 0;
+  border: none;
+  cursor: pointer;
+  padding: 0 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-white);
+  background-color: var(--editor-color);
+  transition: 0.2s ease-in-out;
+}
+
+.list-info-top-banner-return:hover {
+  background-color: var(--background-color-brighter);
+}
+
+
+
+
+.list-info-stats-container {
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--background-color-brighter);
+}
+
+.list-info-stats {
+  flex: 1 0 0;
+  text-align: center;
+  position: relative;
+}
+
+.list-info-stats:not(:last-of-type)::after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 7%;
+  bottom: 7%;
+  width: 0.2rem;
+  background-color: var(--spacer);
+}
+
+.list-info-stats-count,
+.list-info-stats-title {
+  line-height: 1;
+}
+
+.list-info-stats-count {
+  font-size: 4rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.list-info-stats-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--darker-heading);
+  text-transform: uppercase;
+}
+
+.list-info-media-items-container {
+  margin-top: 2rem;
+}
+
+.list-info-media-items-title {
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--dark-white);
+}
+
+.list-info-media-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.list-info-media-item {
+  position: relative;
+}
+
+.list-info-media-items-img {
+  width: 100%;
+}
+
+.list-info-media-item:hover .media-search-item-info-container {
+  opacity: 1;
+  background-color: rgba(0,0,0,0.85);
+}
+
+.list-info-media-item .media-search-item-title {
+  font-size: 2.2rem;
+}

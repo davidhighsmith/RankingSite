@@ -1,0 +1,68 @@
+.list-page-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5rem auto 0;
+  width: 45%;
+}
+
+.list-page-new-list-button {
+  align-self: center;
+  margin-bottom: 3rem;
+  padding: 1.5rem 3rem;
+  text-decoration: none;
+  background-color: var(--container-color);
+  color: var(--white);
+  font-size: 3rem;
+  font-weight: 300;
+  transition: 0.2s ease-in-out;
+}
+
+.list-page-new-list-button:hover {
+  background-color: var(--background-color-brighter);
+}
+
+.list-search-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.list-search-header {
+  font-size: 3rem;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.list-search-buttons {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.list-search-button {
+  border: none;
+  width: 12rem;
+  padding: 1rem 0;
+  font-size: 2rem;
+  font-weight: 100;
+  cursor: pointer;
+  background-color: var(--container-color);
+  color: var(--white);
+  text-transform: uppercase;
+  transition: 0.2s ease-in-out;
+}
+
+.list-search-button:hover {
+  background-color: var(--background-color-brighter);
+}
+
+.list-search-button-active {
+  background-color: var(--dark-white) !important;
+  color: black;
+  font-weight: 400;
+}
+
+.all-lists-page {
+  margin-top: 1.5rem;
+}

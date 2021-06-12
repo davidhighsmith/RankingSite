@@ -1,0 +1,42 @@
+.media-page-right-lists-container {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  gap: var(--list-gap);
+}
+
+.media-page-right-lists-title-container {
+  background-color: var(--container-color);
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.media-page-right-lists-title {
+  line-height: 1;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 48px;
+}
+
+.media-page-right-lists {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--list-gap);
+}
+
+.media-page-right-lists > * {
+  width: 100%;
+  background-color: var(--background-color-brighter);
+}
+
+.media-page-right-lists > *:hover {
+  width: 100%;
+  background-color: var(--container-color);
+}
+
+@media only screen and (min-width: 2550px) {
+  .media-page-right-lists-title {
+    line-height: 59.25px;
+  }
+}

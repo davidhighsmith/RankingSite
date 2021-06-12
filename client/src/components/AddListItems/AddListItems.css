@@ -1,0 +1,160 @@
+.add-list-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 3rem;
+  position: relative;
+}
+
+.add-list-items h3 {
+  font-size: 1.4rem;
+  font-weight: 300;
+  margin-bottom: 0.3rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-button,
+.remove-button {
+  border: none;
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.add-button {
+  background-color: var(--green);
+}
+
+.add-button::after {
+  content: ' ';
+  position: absolute;
+  display: block;
+  background-color: var(--white);
+  height: var(--sign-size);
+  top: 50%;
+  transform: translateY(-50%);
+  left: var(--sign-position);
+  right: var(--sign-position);
+}
+
+.add-button::before {
+  content: ' ';
+  position: absolute;
+  display: block;
+  background-color: var(--white);
+  width: var(--sign-size);
+  left: 50%;
+  transform: translateX(-50%);
+  top: var(--sign-position);
+  bottom: var(--sign-position);
+}
+
+.remove-button {
+  background-color: var(--red);
+}
+
+.remove-button::after {
+  content: ' ';
+  position: absolute;
+  display: block;
+  background-color: var(--white);
+  height: var(--sign-size);
+  top: 50%;
+  transform: translateY(-50%);
+  left: var(--sign-position);
+  right: var(--sign-position);
+}
+
+.add-list-items-confirmation-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color);
+}
+
+.add-list-items-confirmation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+}
+
+.add-list-items-confirmation p {
+  text-align: center;
+}
+
+.add-list-items-confirmation-top {
+  font-size: 1.3rem;
+}
+.add-list-items-confirmation-info-episode-number {
+  font-size: 1.3rem;
+  font-weight: 300;
+  line-height: 1.4;
+}
+.add-list-items-confirmation-info-episode-title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  padding: 0 0.4rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  max-height: 36px;
+}
+
+.add-list-items-yes,
+.add-list-items-no {
+  width: 50%;
+  border: none;
+  color: var(--white);
+  font-size: 2rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.add-list-items-yes {
+  background-color: var(--green);
+}
+
+.add-list-items-no {
+  background-color: var(--red);
+}
+
+.add-list-items-warning-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+}
+
+.add-list-items-warning {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.add-list-items-warning-button {
+  cursor: pointer;
+  border: none;
+  align-self: center;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.4rem;
+}
+
+@media only screen and (min-width: 2550px) {
+  .add-list-items-confirmation-info-episode-title {
+    max-height: 44px;
+  }
+}
