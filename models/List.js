@@ -12,7 +12,6 @@ const ListSchema = new Schema(
       type: Schema.Types.ObjectId, ref: 'Media'
     }],
     list: [{
-      uuid: String,
       order: Number,
       title: String,
       overview: String,

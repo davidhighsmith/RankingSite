@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
+const _ = require('lodash');
 const { MovieDb } = require('moviedb-promise');
 const listTypes = require('../../config/listTypes');
 
@@ -23,7 +23,6 @@ const createSeasonEpisodeList = (episodes, media_id) => {
 
   episodes.forEach((episode, index) => {
     episodeList.push({
-      uuid: uuidv4(),
       order: index + 1,
       title: episode.name,
       overview: episode.overview,
@@ -87,17 +86,58 @@ const saveList = async (id, newList) => {
   }
 }
 
-const updateListInfoSingleSeason = async (media, listItems) => {
+const updateListInfoSingleSeason = async (media, listItems, listId) => {
   const season = listItems[0].season_number;
   const moviedb_id = media[0].moviedb_id;
+  const media_id = listItems[0].media_id;
+  const compareItems = listItems.map(({ _id, ...others }) => others);
 
-  const newEpisodes = await getSeasonEpisodes(moviedb_id, season);
+  const newSeasonInfo = await getSeasonEpisodes(moviedb_id, season);
+  const newEpisodes = newSeasonInfo.episodes;
+  const newList = [];
+
+  const listLength = listItems.length;
 
   newEpisodes.forEach((item, index) => {
-    // TODO: Create new list items array
-  })
+    let rank;
+    if (listLength > index) rank = listItems[index].rank;
+    else rank = null;
 
-  return newEpisodes;
+    newList.push({
+      order: index + 1,
+      title: item.name,
+      overview: item.overview,
+      poster_path: null,
+      still_path: item.still_path,
+      rank,
+      media_id: media_id,
+      season_number: item.season_number,
+      episode_number: item.episode_number,
+    });
+  });
+
+  // Update list if current list and new list aren't equal
+  if (!_.isEqual(compareItems, newList)) {
+    const updatedList = await List.findOneAndUpdate({_id: listId}, {
+      $set: {
+        updated_items: Date.now(),
+        list: newList,
+      }
+    }, {
+      new: true,
+    });
+    return [updatedList, true];
+  }
+
+  // not equal, update time for last updated items and return false
+  const updatedList = await List.findOneAndUpdate({_id: listId}, {
+    $set: {
+      updated_items: Date.now(),
+    }
+  }, {
+    new: true,
+  });
+  return [updatedList, false];
 }
 
 // List search
@@ -113,10 +153,10 @@ router.put('/update/:id', async (req, res) => {
 
   // Single season list
   if (listType === listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES) {
-    const newList = await updateListInfoSingleSeason(media, listItems);
-    return res.send(newList);
+    const [updatedList, updated] = await updateListInfoSingleSeason(media, listItems, id);
+    return res.send({ updatedList, updated });
   }
-  return res.send('list type not implemented yet');
+  return res.send('List type hasn\'t been implemented yet.');
 });
 
 // update list, rankings change

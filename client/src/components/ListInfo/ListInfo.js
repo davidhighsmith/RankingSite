@@ -77,7 +77,30 @@ const ListInfo = ({ location }) => {
       listType,
       listItems,
     });
-    console.log('response:', data);
+
+    const { updatedList } = data;
+    // items were updated
+    if (data.updated) {
+      setListItems(updatedList.list);
+      setTopBannerInfo({ title: updatedList.title, subtitle: updatedList.subtitle });
+      setDescription(updatedList.description);
+      setListType(updatedList.list_type);
+      setUpdatedItems(updatedList.updated_items);
+
+      history.replace({
+        pathname: location.pathname, 
+        state: {
+          listItems: updatedList.list,
+          topBannerInfo: { title: updatedList.title, subtitle: updatedList.subtitle },
+          description: updatedList.description,
+          listType: updatedList.list_type,
+        }
+      });
+    }
+    // items weren't updated but updated items time needs changed
+    else {
+      setUpdatedItems(updatedList.updated_items);
+    }
   }
 
   return (
