@@ -60,7 +60,6 @@ const AllMedia = ({ location }) => {
   []);
 
   const sendToTempPage = (e, properties) => {
-    console.log(lastSearch.searchPopularity);
     e.preventDefault();
     history.push({
       pathname: `/media/temp/${properties.id}`,

@@ -49,7 +49,18 @@ const ListCreate = ({ location }) => {
     }
 
     const { data } = await axios.post(`/api/lists`, { info: newInfo, options });
-    console.log(data);
+
+    history.push({
+      pathname: `/lists/${data._id}/info`, 
+      state: {
+        listItems: data.list,
+        topBannerInfo: { title: data.title, subtitle: data.subtitle },
+        description: data.description,
+        listType: data.list_type,
+        media: data.media,
+        updatedItems: data.updatedItems,
+      }
+    });
   }
 
   const getListTypes = () => {

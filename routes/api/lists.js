@@ -221,7 +221,10 @@ router.post('/', async (req, res) => {
 
     await newList.save();
     await media.save();
-  
+
+    // TODO: cut out unneeded info from media items 
+    newList.media = [media];
+
     return res.send(newList);
   }
 

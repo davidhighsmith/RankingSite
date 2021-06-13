@@ -9,8 +9,6 @@ const MediaLists = ({ lists }) => {
     ListTypes.TV_SINGLE_SHOW_SEASONS
   ];
 
-  console.log(lists);
-
   return (
     <div className="media-page-right-lists-container">
       <div className="media-page-right-lists-title-container">
