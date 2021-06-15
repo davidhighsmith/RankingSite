@@ -320,6 +320,7 @@ const Lists = ({ location }) => {
       activated: true,
       list_item_info: info
     });
+    handleScroll();
   }
 
   const setBaseRemoveListItemInfo = () => {
@@ -377,6 +378,7 @@ const Lists = ({ location }) => {
       // Add edit class to new list item
       // sleep to let the state set
       await sleep(50);
+      handleScroll('add');
       removeEditClass();
       document.getElementsByClassName('list-item')[getRankedListItemCount() - 1].classList.add('list-item-edit');
       return;
@@ -462,10 +464,54 @@ const Lists = ({ location }) => {
     setListOrder(getOrder);
     setBaseRemoveListItemInfo();
     setRemoving(false);
+    handleScroll();
   }
 
   const getRankedListItemCount = () => {
     return document.getElementsByClassName('list-item').length;
+  }
+
+  const handleScroll = (newRank = 'center') => {
+    // newRank === 'higher', 'lower', 'add', 'center'
+
+    if (newRank === 'add') {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+      return;
+    }
+
+    const listItem = document.querySelector('.list-item-edit');
+    if (newRank === 'center') {
+      listItem.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      return;
+    }
+
+    const bannerHeight = document.querySelector('.outer-show-container').offsetHeight;
+    const listItemHeight = listItem.offsetHeight;
+    const { top: elemTop, bottom: elemBottom } = document.querySelector('.list-item-edit').getBoundingClientRect();
+    const scrollOffset = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+
+    if (newRank === 'higher') {
+        window.scrollTo({
+          top: elemTop + scrollOffset - bannerHeight - listItemHeight - 30,
+          behavior: 'smooth',
+        });
+        return;
+    }
+
+    if (newRank === 'lower') {
+        window.scrollBy({
+          top: elemBottom - windowHeight + listItemHeight + 30, 
+          behavior: 'smooth'
+        });
+        return;
+    }
   }
 
   const updateDumbyListItems = (updatedListItem, prevRank) => {
@@ -481,8 +527,10 @@ const Lists = ({ location }) => {
       })
     }
 
+    let newRank;
     // Higher Ranking
     if (prevRank > updatedListItem.rank) {
+      newRank = 'higher';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank < updatedListItem.rank) return;
@@ -499,6 +547,7 @@ const Lists = ({ location }) => {
 
     // Lower Ranking
     if (prevRank < updatedListItem.rank) {
+      newRank = 'lower';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank > updatedListItem.rank) return;
@@ -518,6 +567,7 @@ const Lists = ({ location }) => {
 
     setListOrder(getOrder);
     setDumbyListItems(newList);
+    handleScroll(newRank);
   }
 
   const updateSelectedListItem = (e) => {
@@ -727,6 +777,7 @@ const Lists = ({ location }) => {
       })
       setDumbyListItems(newList);
       setListOrder(orderNumbers);
+      handleScroll();
     }
   }
 
