@@ -667,6 +667,7 @@ const Lists = ({ location }) => {
         };
   
         setSelectedListItem(newSelectedListItem);
+        handleScroll();
       }
   
       // move edit item to item ranked one lower
@@ -685,6 +686,7 @@ const Lists = ({ location }) => {
         };
   
         setSelectedListItem(newSelectedListItem);
+        handleScroll();
       }
   
       // toggle edit mode
