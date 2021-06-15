@@ -7,12 +7,16 @@ import AllMedia from './components/AllMedia/AllMedia';
 import TempMedia from './components/TempMedia/TempMedia';
 import Media from './components/Media/Media';
 import ListCreate from './components/ListCreate/ListCreate';
+import TestMovieList from './components/ZTestMovieList/TestMovieList';
 import './App.css';
 
 const App = () => {
   return (
     <>
       <Switch>
+        <Route exact path="/lists/movie">
+          <TestMovieList />
+        </Route>
         <Route exact path="/lists/create">
           <ListCreate />
         </Route>

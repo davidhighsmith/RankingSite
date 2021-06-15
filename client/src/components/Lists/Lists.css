@@ -17,16 +17,3 @@
   justify-content: space-between;
   border-radius: var(--border-radius);
 }
-
-.list-container {
-  --items: 2;
-
-  display: grid;
-  grid-template-columns: repeat(var(--items), 1fr);
-  gap: var(--gap);
-  margin: 1.5rem 2rem 2rem;
-}
-
-.list-container-edit {
-  user-select: none;
-}

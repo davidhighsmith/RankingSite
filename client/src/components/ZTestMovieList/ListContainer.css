@@ -1,0 +1,7 @@
+.list-container.list-container-movie {
+  --items: 6;
+}
+
+.list-container-movie .list-item-thumbnail-container {
+  flex-basis: 100%;
+}
