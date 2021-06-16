@@ -98,6 +98,83 @@ const TestMovieList = ({ location }) => {
       season_number: null,
       episode_number: null,
     },
+    {
+      order: 8,
+      title: 'Iron Man',
+      overview: 'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.',
+      still_path: null,
+      poster_path: '/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
+      rank: 8,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 9,
+      title: 'The Incredible Hulk',
+      overview: 'Scientist Bruce Banner scours the planet for an antidote to the unbridled force of rage within him: the Hulk. But when the military masterminds who dream of exploiting his powers force him back to civilization, he finds himself coming face to face with a new, deadly foe.',
+      still_path: null,
+      poster_path: '/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg',
+      rank: 9,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 10,
+      title: 'Iron Man 2',
+      overview: 'With the world now aware of his dual life as the armored superhero Iron Man, billionaire inventor Tony Stark faces pressure from the government, the press and the public to share his technology with the military. Unwilling to let go of his invention, Stark, with Pepper Potts and James \'Rhodey\' Rhodes at his side, must forge new alliances – and confront powerful enemies.',
+      still_path: null,
+      poster_path: '/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg',
+      rank: 10,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 11,
+      title: 'Thor',
+      overview: 'Against his father Odin\'s will, The Mighty Thor - a powerful but arrogant warrior god - recklessly reignites an ancient war. Thor is cast down to Earth and forced to live among humans as punishment. Once here, Thor learns what it takes to be a true hero when the most dangerous villain of his world sends the darkest forces of Asgard to invade Earth.',
+      still_path: null,
+      poster_path: '/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg',
+      rank: 11,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 12,
+      title: 'Captain America: The First Avenger',
+      overview: 'During World War II, Steve Rogers is a sickly man from Brooklyn who\'s transformed into super-soldier Captain America to aid in the war effort. Rogers must stop the Red Skull – Adolf Hitler\'s ruthless head of weaponry, and the leader of an organization that intends to use a mysterious device of untold powers for world domination. ruthless head of weaponry, and the leader of an organization that intends to use a mysterious device of untold powers for world domination. ruthless head of weaponry, and the leader of an organization that intends to use a mysterious device of untold powers for world domination.',
+      still_path: null,
+      poster_path: '/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg',
+      rank: 12,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 13,
+      title: 'The Avengers',
+      overview: 'When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!',
+      still_path: null,
+      poster_path: '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg',
+      rank: 13,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
+    {
+      order: 14,
+      title: 'The Avengers',
+      overview: 'When an unexpected enemy emerges and threatens global safety and security, Nick Fury, director of the international peacekeeping agency known as S.H.I.E.L.D., finds himself in need of a team to pull the world back from the brink of disaster. Spanning the globe, a daring recruitment effort begins!',
+      still_path: null,
+      poster_path: '/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg',
+      rank: 14,
+      media_id: 'wegergtht',
+      season_number: null,
+      episode_number: null,
+    },
   ]);
   const [dumbyListItems, setDumbyListItems] = useState([]);
   const [dumbyUnrankedItems, setDumbyUnrankedItems] = useState([]);
@@ -487,20 +564,27 @@ const TestMovieList = ({ location }) => {
     const scrollOffset = window.pageYOffset;
     const windowHeight = window.innerHeight;
 
+    // TODO: Test if 2 rows of posters can be shown on a bigger screen
     if (newRank === 'higher') {
-        window.scrollTo({
-          top: elemTop + scrollOffset - bannerHeight - listItemHeight - 30,
-          behavior: 'smooth',
-        });
-        return;
+      let move = listType === listTypes.MOVIE ?
+      elemTop + scrollOffset - bannerHeight - 5 :
+      elemTop + scrollOffset - bannerHeight - listItemHeight - 30
+      window.scrollTo({
+        top: move,
+        behavior: 'smooth',
+      });
+      return;
     }
 
     if (newRank === 'lower') {
-        window.scrollBy({
-          top: elemBottom - windowHeight + listItemHeight + 30, 
-          behavior: 'smooth'
-        });
-        return;
+      let move = listType === listTypes.MOVIE ?
+        elemBottom - windowHeight + 10 :
+        elemBottom - windowHeight + listItemHeight + 30
+      window.scrollBy({
+        top: move, 
+        behavior: 'smooth'
+      });
+      return;
     }
   }
 
