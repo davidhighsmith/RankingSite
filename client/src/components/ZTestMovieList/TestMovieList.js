@@ -550,7 +550,7 @@ const TestMovieList = ({ location }) => {
     }
 
     const listItem = document.querySelector('.list-item-edit');
-    if (newRank === 'center') {
+    if (newRank === 'center' || listType === listTypes.MOVIE) {
       listItem.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
@@ -566,25 +566,25 @@ const TestMovieList = ({ location }) => {
 
     // TODO: Test if 2 rows of posters can be shown on a bigger screen
     if (newRank === 'higher') {
-      let move = listType === listTypes.MOVIE ?
-      elemTop + scrollOffset - bannerHeight - 5 :
-      elemTop + scrollOffset - bannerHeight - listItemHeight - 30
-      window.scrollTo({
-        top: move,
-        behavior: 'smooth',
-      });
-      return;
+      let move = elemTop + scrollOffset - bannerHeight - listItemHeight - 30;
+      if (Math.abs(move - scrollOffset) > 30) {
+        window.scrollTo({
+          top: move,
+          behavior: 'smooth',
+        });
+        return;
+      }
     }
 
     if (newRank === 'lower') {
-      let move = listType === listTypes.MOVIE ?
-        elemBottom - windowHeight + 10 :
-        elemBottom - windowHeight + listItemHeight + 30
-      window.scrollBy({
-        top: move, 
-        behavior: 'smooth'
-      });
-      return;
+      let move = elemBottom - windowHeight + listItemHeight + 30;
+      if (Math.abs(move) > 30) {
+        window.scrollBy({
+          top: move, 
+          behavior: 'smooth'
+        });
+        return;
+      }
     }
   }
 
