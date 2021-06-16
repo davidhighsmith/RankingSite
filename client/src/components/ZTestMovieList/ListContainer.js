@@ -14,7 +14,7 @@ import listTypes from '../../utils/listTypes';
 import '../ListContainer/ListContainer.css';
 import './ListContainer.css';
 
-const ListContainer = ({ editMode, setListItemToEdit, listItems, listOrder, listType, updateAfterDrop, selectedListItem }) => {
+const ListContainer = ({ editMode, setListItemToEdit, listItems, listOrder, listType, updateAfterDrop, selectedListItem, showInfo }) => {
   const removeUnranked = (listItems) => {
     const filtered = [];
     listItems.forEach(li => { if (li.rank !== null) filtered.push(li) });
@@ -58,6 +58,7 @@ const ListContainer = ({ editMode, setListItemToEdit, listItems, listOrder, list
                 editMode={editMode} 
                 selectedListItem={selectedListItem} 
                 listType={listType}
+                showInfo={showInfo}
               />)}
           </SortableContext>
         </DndContext> 
@@ -69,6 +70,7 @@ const ListContainer = ({ editMode, setListItemToEdit, listItems, listOrder, list
             setListItemToEdit={setListItemToEdit} 
             editMode={editMode} 
             listType={listType}
+            showInfo={showInfo}
           />)
       }
     </div>

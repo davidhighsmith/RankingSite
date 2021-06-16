@@ -201,6 +201,7 @@ const TestMovieList = ({ location }) => {
   const [newListItemWarning, setNewListItemWarning] = useState(false);
   const [keyDown, setKeyDown] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showInfo, setShowInfo] = useState([]);
   const { id } = useParams();
   const history = useHistory();
   const { state } = location;
@@ -284,19 +285,43 @@ const TestMovieList = ({ location }) => {
   }
 
   const setListItemToEdit = (e) => {
-    if (!editMode) return;
-
     // Get rank to search dumbyListItems
     const temp_rank = parseInt(e.currentTarget.getElementsByClassName('list-item-rank')[0].innerText.split('#')[1]);
 
     let item;
 
-    for (const i of dumbyListItems) {
-      if (i.rank === temp_rank) {
-        item = i;
-        break;
+    if (editMode) {
+      for (const i of dumbyListItems) {
+        if (i.rank === temp_rank) {
+          item = i;
+          break;
+        }
+      }
+    } else {
+      for (const i of listItems) {
+        if (i.rank === temp_rank) {
+          item = i;
+          break;
+        }
       }
     }
+    
+    // If clicked on info image, add order to showInfo
+    // and return since I don't want the item to be set to edit
+    if (e.target.dataset.info || showInfo.includes(item.order)) {
+      const newShowInfo = [...showInfo];
+      const index = newShowInfo.indexOf(item.order);
+      if (index !== -1)
+        newShowInfo.splice(index, 1);
+      else 
+        newShowInfo.push(item.order);
+      setShowInfo(newShowInfo);
+      return;
+    }
+
+    // Return if not in editMode since rest of logic
+    // depends on being in editMode to work
+    if (!editMode) return;
 
     setSelectedListItem({
       order: item.order,
@@ -924,6 +949,7 @@ const TestMovieList = ({ location }) => {
           listType={listType}
           updateAfterDrop={updateAfterDrop} 
           selectedListItem={selectedListItem} 
+          showInfo={showInfo}
         />
         {editMode ? 
           <EditToolbar 
