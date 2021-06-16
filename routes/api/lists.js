@@ -32,10 +32,30 @@ const createSeasonEpisodeList = (episodes, media_id) => {
       media_id: media_id,
       season_number: episode.season_number,
       episode_number: episode.episode_number,
-    })
-  })
+    });
+  });
 
   return episodeList;
+}
+
+const createMovieList = (movies) => {
+  const movieList = [];
+
+  movies.forEach((movie, index) => {
+    movieList.push({
+      order: index + 1,
+      title: movie.title,
+      overview: movie.overview,
+      poster_path: movie.poster_path,
+      still_path: null,
+      rank: null,
+      media_id: movie._id,
+      season_number: null,
+      episode_number: null,
+    });
+  });
+
+  return movieList;
 }
 
 const listSearchById = async (id) => {
@@ -202,9 +222,10 @@ router.post('/', async (req, res) => {
   const { info } = req.body;
   const { options } = req.body;
 
+  // New TV Show Single Season Episodes List
   if (options.listType === 
       listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES) {
-    const data = await getSeasonEpisodes(info.moviedb_id, options.selectedSeason);
+    const data = await getSeasonEpisodes(info.items[0].moviedb_id, options.selectedSeason);
   
     let newList = new List({
       title: info.title,
@@ -212,11 +233,11 @@ router.post('/', async (req, res) => {
       description: info.description !== '' ? info.description : `List for season ${options.selectedSeason} of ${info.title}.`,
       list_type: listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES,
       updated_items: Date.now(),
-      media: [info._id],
-      list: createSeasonEpisodeList(data.episodes, info._id),
+      media: [info.items[0]._id],
+      list: createSeasonEpisodeList(data.episodes, info.items[0]._id),
     });
 
-    const media = await Media.findById(info._id);
+    const media = await Media.findById(info.items[0]._id);
     media.lists.push(newList._id);
 
     await newList.save();
@@ -224,6 +245,26 @@ router.post('/', async (req, res) => {
 
     // TODO: cut out unneeded info from media items 
     newList.media = [media];
+
+    return res.send(newList);
+  }
+
+  // New Movie List
+  if (options.listType === listTypes.MOVIE) {
+    let mediaItems = [];
+    info.items.forEach(item => {
+      mediaItems.push(item._id);
+    });
+
+    let newList = {
+      title: info.title,
+      subtitle: info.subtitle,
+      description: info.description !== '' ? info.description : 'No description provided.',
+      list_type: listTypes.MOVIE,
+      updated_items: Date.now(),
+      media: mediaItems,
+      list: createMovieList(info.items)
+    };
 
     return res.send(newList);
   }

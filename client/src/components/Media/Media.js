@@ -8,6 +8,7 @@ import MediaLists from '../MediaLists/MediaLists';
 import MediaCreateList from '../MediaCreateList/MediaCreateList';
 import './Media.css';
 import { instance as axios } from '../../utils/axios';
+import listTypes from '../../utils/listTypes';
 
 const Media = ({ location }) => {
   const [info, setInfo] = useState({});
@@ -89,6 +90,18 @@ const Media = ({ location }) => {
     }
   }
 
+  const newListButton = () => {
+    if (info.media_type !== 'movie') {
+      openTab === 'lists' ? setOpenTab("createList") : setOpenTab('lists');
+      return;
+    }
+
+    history.push({
+      pathname: '/lists/create',
+      state: { info, listType: listTypes.MOVIE }
+    });
+  }
+
   return (
     <>
     {loading ? <div>Loading</div> : 
@@ -154,7 +167,7 @@ const Media = ({ location }) => {
 
           <div className="media-page-right-button-center-container">
             <div className="media-page-right-button-container">
-              <button className="media-page-right-button" onClick={() =>{ openTab === 'lists' ? setOpenTab("createList") : setOpenTab('lists') }}>{ openTab === 'lists' ? 'New List' : 'Lists' }</button>
+              <button className="media-page-right-button" onClick={newListButton}>{ openTab === 'lists' ? 'New List' : 'Lists' }</button>
               <button className="media-page-right-button">Add to List</button>
               <button className="media-page-right-button" onClick={updateInfo}>Update</button>
             </div>

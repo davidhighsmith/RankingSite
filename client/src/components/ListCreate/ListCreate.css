@@ -104,22 +104,33 @@
   resize: none;
 }
 
+.list-create-form-add-items,
 .list-create-form-submit {
   margin-top: 1rem;
-  width: 50%;
   align-self: center;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
+  padding: 1.2rem 0;
   font-size: 2.6rem;
   text-transform: uppercase;
   font-weight: 300;
-  padding: 1.2rem 0;
   line-height: 1;
   background-color: var(--darker-white);
   transition: background-color 0.1s ease-in-out;
 }
 
+.list-create-form-add-items {
+  width: 100%;
+  text-align: center;
+  color: black;
+}
+
+.list-create-form-submit {
+  width: 50%;
+}
+
+.list-create-form-add-items:hover,
 .list-create-form-submit:hover {
   background-color: var(--white);
   font-weight: 400;
