@@ -236,13 +236,6 @@ const AllMedia = ({ location }) => {
       <div className="media-search-results-container">
         <div className="media-search-results">
           {createList()}
-          {/* <MediaSearchItem id={1} />
-          <MediaSearchItem id={2} />
-          <MediaSearchItem id={3} />
-          <MediaSearchItem id={4} />
-          <MediaSearchItem id={5} />
-          <MediaSearchItem id={6} />
-          <MediaSearchItem id={7} /> */}
         </div>
       </div>
 

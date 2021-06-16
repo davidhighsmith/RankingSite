@@ -5,7 +5,7 @@ import placeholder from '../../images/placeholder-600x900.jpg';
 import './MediaSearchItem.css';
 
 const MediaSearchItem = ({ properties, sendToTempPage, sendToMediaPage }) => {
-  const { id, poster_path, media_type, title, name, first_air_date, release_date, original_title, original_name, _id } = properties;
+  const { id, poster_path, title, name, first_air_date, release_date, original_title, original_name, _id } = properties;
   
   const listItem = () => {
     let item;
@@ -17,7 +17,7 @@ const MediaSearchItem = ({ properties, sendToTempPage, sendToMediaPage }) => {
 
       let year;
       if (release_date || first_air_date) {
-        year = media_type === "movie" ? dateFormat(release_date, "yyyy") : dateFormat(first_air_date, "yyyy");
+        year = release_date ? dateFormat(release_date, "yyyy") : dateFormat(first_air_date, "yyyy");
       }
 
       item = (
