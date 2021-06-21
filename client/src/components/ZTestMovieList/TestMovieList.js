@@ -209,7 +209,10 @@ const TestMovieList = ({ location }) => {
   // immediately call another function to not have a big
   // function above the useEffects
   const handleKeyDownPress = async (e) => {
-    if (keyDown) return;
+    if (keyDown) {
+      e.preventDefault();
+      return;
+    }
     await handleKeyPresses(e);
   }
 
@@ -470,7 +473,7 @@ const TestMovieList = ({ location }) => {
       // Add edit class to new list item
       // sleep to let the state set
       await sleep(50);
-      handleScroll('add');
+      handleScroll();
       removeEditClass();
       document.getElementsByClassName('list-item')[getRankedListItemCount() - 1].classList.add('list-item-edit');
       return;
@@ -563,54 +566,26 @@ const TestMovieList = ({ location }) => {
     return document.getElementsByClassName('list-item').length;
   }
 
-  const handleScroll = (newRank = 'center') => {
-    // newRank === 'higher', 'lower', 'add', 'center'
-
-    if (newRank === 'add') {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      });
-      return;
-    }
-
+  const handleScroll = () => {
+    // had issues with scrollIntoView center
+    // so made my own version that works
     const listItem = document.querySelector('.list-item-edit');
-    if (newRank === 'center' || listType === listTypes.MOVIE) {
-      listItem.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-      return;
-    }
 
-    const bannerHeight = document.querySelector('.outer-show-container').offsetHeight;
     const listItemHeight = listItem.offsetHeight;
-    const { top: elemTop, bottom: elemBottom } = document.querySelector('.list-item-edit').getBoundingClientRect();
+    const { top: elemTop } = document.querySelector('.list-item-edit').getBoundingClientRect();
     const scrollOffset = window.pageYOffset;
     const windowHeight = window.innerHeight;
 
-    // TODO: Test if 2 rows of posters can be shown on a bigger screen
-    if (newRank === 'higher') {
-      let move = elemTop + scrollOffset - bannerHeight - listItemHeight - 30;
-      if (Math.abs(move - scrollOffset) > 30) {
-        window.scrollTo({
-          top: move,
-          behavior: 'smooth',
-        });
-        return;
-      }
-    }
+    // get middle of current item position from top of the screen
+    const fromTopOfScreen = scrollOffset + elemTop + listItemHeight / 2;
+    const halfWindowHeight = windowHeight / 2;
 
-    if (newRank === 'lower') {
-      let move = elemBottom - windowHeight + listItemHeight + 30;
-      if (Math.abs(move) > 30) {
-        window.scrollBy({
-          top: move, 
-          behavior: 'smooth'
-        });
-        return;
-      }
-    }
+    window.scrollTo({
+      top: fromTopOfScreen - halfWindowHeight,
+      behavior: 'smooth',
+    })
+
+    return;
   }
 
   const updateDumbyListItems = (updatedListItem, prevRank) => {
@@ -666,7 +641,7 @@ const TestMovieList = ({ location }) => {
 
     setListOrder(getOrder);
     setDumbyListItems(newList);
-    handleScroll(newRank);
+    handleScroll();
   }
 
   const updateSelectedListItem = (e) => {
