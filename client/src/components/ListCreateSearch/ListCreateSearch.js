@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { baseImage } from '../../utils/theMovieDBBaseURL';
 import placeholder from '../../images/placeholder-600x900.jpg';
+import ListCreateItemsContainer from '../ListCreateItemsContainer/ListCreateItemsContainer';
 import './ListCreateSearch.css';
 
-const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToList, removeFromList }) => {
+const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToList, removeFromList, listOrder, updateAfterDrop }) => {
   const [show, setShow] = useState(true);
   const searchRef = useRef(null);
 
@@ -20,16 +21,12 @@ const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToLi
           </div>
         </div>
         { show &&
-        <div className="show-list-items">
-          { info.map(item => 
-            <div className="show-list-item" key={item._id}>
-              <div className="show-list-item-title">
-                <h3 title={item.title}>{item.title}</h3>
-              </div>
-              <div className="show-list-item-remove" onClick={() => removeFromList(item)}>X</div>
-            </div>
-          )}
-        </div>
+          <ListCreateItemsContainer 
+            info={info} 
+              removeFromList={removeFromList}
+              listOrder={listOrder}
+              updateAfterDrop={updateAfterDrop}
+          />
         }
       </div>
       <div className="list-create-search-results-container">

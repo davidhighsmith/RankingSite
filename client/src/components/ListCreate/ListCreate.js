@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import _ from 'lodash';
+import { arrayMove } from '@dnd-kit/sortable';
 import Nav from '../Nav/Nav';
 import Modal from '../Modal/Modal';
 import ListCreateSearch from '../ListCreateSearch/ListCreateSearch';
@@ -13,7 +14,9 @@ const ListCreate = ({ location }) => {
   const [loading, setLoading] = useState(true);
   const [redirected, setRedirected] = useState(false);
   const [listType, setListType] = useState('');
+  const [mediaType, setMediaType] = useState('');
   const [info, setInfo] = useState([]);
+  const [listOrder, setListOrder] = useState([]);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [description, setDescription] = useState('');
@@ -29,8 +32,11 @@ const ListCreate = ({ location }) => {
     if (state) {
       let arr = [];
       arr.push({...state.info});
+      const order = getListOrder(arr);
       setInfo(arr);
       setListType(state.listType);
+      setMediaType(state.info.media_type);
+      setListOrder(order);
       if (state.info.media_type !== 'movie') {
         setSeasonOptions(state.seasonOptions);
         setSelectedSeason(state.selectedSeason);
@@ -39,6 +45,29 @@ const ListCreate = ({ location }) => {
     }
     setLoading(false);
   }, [state]);
+
+  const getListOrder = (list) => {
+    let newOrder = [];
+    list.forEach(item => newOrder.push(item.moviedb_id.toString()));
+    return newOrder;
+  }
+
+  const updateAfterDrop = (e) => {
+    const {active, over} = e;
+
+    if (!over) return;
+    
+    if (active.id !== over.id) {
+      let newInfoList = _.cloneDeep(info);
+      const oldIndex = newInfoList.findIndex(i => i.moviedb_id === parseInt(active.id));
+      const newIndex = newInfoList.findIndex(i => i.moviedb_id === parseInt(over.id));
+
+      newInfoList = arrayMove(newInfoList, oldIndex, newIndex);
+      const newOrder = getListOrder(newInfoList);
+      setInfo(newInfoList);
+      setListOrder(newOrder);
+    }
+  }
 
   // TODO: Redirect to info page for new list after creation
   const submitForm = async (e) => {
@@ -83,7 +112,7 @@ const ListCreate = ({ location }) => {
   }
 
   const getListTypes = () => {
-    if (info.media_type === 'tv') {
+    if (mediaType === 'tv') {
       const tvsssse = listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES;
       const tvsse = listTypes.TV_SINGLE_SHOW_EPISODES;
       const tvsss = listTypes.TV_SINGLE_SHOW_SEASONS;
@@ -118,7 +147,6 @@ const ListCreate = ({ location }) => {
           searchLocation: 'database',
         }
       });
-      console.log(data);
       setSearchResults(data);
     }
   }
@@ -126,7 +154,9 @@ const ListCreate = ({ location }) => {
   const addToList = (item) => {
     let newInfo = _.cloneDeep(info);
     newInfo.push(item);
+    const newOrder = getListOrder(newInfo);
     setInfo(newInfo);
+    setListOrder(newOrder);
   }
 
   const removeFromList = (item) => {
@@ -141,7 +171,9 @@ const ListCreate = ({ location }) => {
 
     if (typeof index !== "undefined") {
       newInfo.splice(index, 1);
+      const newOrder = getListOrder(newInfo);
       setInfo(newInfo);
+      setListOrder(newOrder);
     }
   }
 
@@ -167,6 +199,8 @@ const ListCreate = ({ location }) => {
               searchResults={searchResults}
               addToList={addToList}
               removeFromList={removeFromList}
+              listOrder={listOrder}
+              updateAfterDrop={updateAfterDrop}
             />
           </Modal>
           <div className="list-create-form-container">
@@ -194,7 +228,8 @@ const ListCreate = ({ location }) => {
 
               {listType === listTypes.MOVIE &&
                 <div className="list-create-form-input-container">
-                  <div className="list-create-form-add-items" onClick={() => setShowModal(true)}>Add Items</div>
+                  <h3 className="list-create-form-input-list-count">{info.length} <span>item{info.length === 1 ? '' : 's'} in list</span></h3>
+                  <div className="list-create-form-add-items" onClick={() => setShowModal(true)}>Edit Items</div>
                 </div>
               }
               

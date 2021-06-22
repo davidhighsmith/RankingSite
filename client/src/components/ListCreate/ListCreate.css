@@ -120,6 +120,18 @@
   transition: background-color 0.1s ease-in-out;
 }
 
+.list-create-form-input-list-count {
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1;
+}
+
+.list-create-form-input-list-count span {
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
 .list-create-form-add-items {
   width: 100%;
   text-align: center;

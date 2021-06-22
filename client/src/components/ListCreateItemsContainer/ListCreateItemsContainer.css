@@ -1,0 +1,6 @@
+.show-list-items {
+  margin-bottom: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
