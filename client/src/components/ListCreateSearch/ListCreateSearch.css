@@ -162,7 +162,9 @@
 }
 
 .list-create-search-container ::-webkit-scrollbar-thumb {
-  background-color: var(--container-color);
+  background-color: var(--editor-color);
+  border-left: 0.3rem solid var(--background-color-brighter);
+  border-right: 0.3rem solid var(--background-color-brighter);
 }
 
 .list-create-item {

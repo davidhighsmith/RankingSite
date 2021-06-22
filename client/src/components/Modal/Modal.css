@@ -19,6 +19,31 @@
   box-shadow: var(--box-shadow);
 }
 
+.modal-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  background-color: var(--background-color-brighter);
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  box-shadow: var(--light-box-shadow);
+  font-size: 2rem;
+  font-weight: 400;
+  cursor: pointer;
+  color: var(--darker-white);
+  transition: all 0.1s ease-in-out;
+}
+
+.modal-x:hover {
+  box-shadow: var(--box-shadow);
+  background-color: var(--container-color);
+  color: var(--white);
+}
+
 .hide-modal {
   display: none;
 }

@@ -159,7 +159,7 @@ const ListCreate = ({ location }) => {
       <Nav active="lists" />
       {loading ? null :
         <>
-          <Modal showModal={showModal} closeModal={closeModal}>
+          <Modal showModal={showModal} closeModal={closeModal} showX={true}>
             <ListCreateSearch 
               info={info}
               search={search}
