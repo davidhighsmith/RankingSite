@@ -601,10 +601,8 @@ const TestMovieList = ({ location }) => {
       })
     }
 
-    let newRank;
     // Higher Ranking
     if (prevRank > updatedListItem.rank) {
-      newRank = 'higher';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank < updatedListItem.rank) return;
@@ -621,7 +619,6 @@ const TestMovieList = ({ location }) => {
 
     // Lower Ranking
     if (prevRank < updatedListItem.rank) {
-      newRank = 'lower';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank > updatedListItem.rank) return;
