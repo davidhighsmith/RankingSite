@@ -79,24 +79,29 @@ const ListCreate = ({ location }) => {
 
   const sortByRelease = () => {
     const newList = _.cloneDeep(info);
-    if (sortBy === sortOrder.UNSORTED) {
-      newList.sort((a, b) => (a.release_date > b.release_date ? 1 : -1));
-      const newOrder = getListOrder(newList);
-      setSortBy(sortOrder.ASCENDING);
-      setInfo(newList);
-      setListOrder(newOrder);
-    }
-    else if (sortBy === sortOrder.ASCENDING) {
-      newList.sort((a, b) => (a.release_date > b.release_date ? -1 : 1));
-      const newOrder = getListOrder(newList);
-      setSortBy(sortOrder.DESCENDING);
-      setInfo(newList);
-      setListOrder(newOrder);
-    }
-    else {
-      setSortBy(sortOrder.UNSORTED);
-    }
+    if (sortBy === sortOrder.UNSORTED) sortAscending(newList);
+    else if (sortBy === sortOrder.ASCENDING) sortDescending(newList);
+    else sortUnsorted();
   }
+
+  const updateSort = (list, order) => {
+    const newOrder = getListOrder(list);
+    setSortBy(order);
+    setInfo(list);
+    setListOrder(newOrder);
+  }
+
+  const sortAscending = (newList) => {
+    newList.sort((a, b) => (a.release_date > b.release_date ? 1 : -1));
+    updateSort(newList, sortOrder.ASCENDING);
+  }
+
+  const sortDescending = (newList) => {
+    newList.sort((a, b) => (a.release_date > b.release_date ? -1 : 1));
+    updateSort(newList, sortOrder.DESCENDING);
+  }
+
+  const sortUnsorted = () => setSortBy(sortOrder.UNSORTED);
 
   // TODO: Redirect to info page for new list after creation
   const submitForm = async (e) => {
@@ -183,9 +188,14 @@ const ListCreate = ({ location }) => {
   const addToList = (item) => {
     let newInfo = _.cloneDeep(info);
     newInfo.push(item);
-    const newOrder = getListOrder(newInfo);
-    setInfo(newInfo);
-    setListOrder(newOrder);
+
+    if (sortBy === sortOrder.ASCENDING) sortAscending(newInfo);
+    else if (sortBy === sortOrder.DESCENDING) sortDescending(newInfo);
+    else {
+      const newOrder = getListOrder(newInfo);
+      setInfo(newInfo);
+      setListOrder(newOrder);
+    }
   }
 
   const removeFromList = (item) => {
