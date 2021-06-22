@@ -10,6 +10,12 @@ import listTypes from '../../utils/listTypes';
 import { instance as axios } from '../../utils/axios';
 import './ListCreate.css';
 
+const sortOrder = {
+  UNSORTED: 'unsorted',
+  ASCENDING: 'oldest to newest',
+  DESCENDING: 'newest to oldest',
+}
+
 const ListCreate = ({ location }) => {
   const [loading, setLoading] = useState(true);
   const [redirected, setRedirected] = useState(false);
@@ -25,6 +31,7 @@ const ListCreate = ({ location }) => {
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [sortBy, setSortBy] = useState(sortOrder.UNSORTED);
   const history = useHistory();
   const { state } = location;
 
@@ -66,6 +73,28 @@ const ListCreate = ({ location }) => {
       const newOrder = getListOrder(newInfoList);
       setInfo(newInfoList);
       setListOrder(newOrder);
+      setSortBy('unsorted');
+    }
+  }
+
+  const sortByRelease = () => {
+    const newList = _.cloneDeep(info);
+    if (sortBy === sortOrder.UNSORTED) {
+      newList.sort((a, b) => (a.release_date > b.release_date ? 1 : -1));
+      const newOrder = getListOrder(newList);
+      setSortBy(sortOrder.ASCENDING);
+      setInfo(newList);
+      setListOrder(newOrder);
+    }
+    else if (sortBy === sortOrder.ASCENDING) {
+      newList.sort((a, b) => (a.release_date > b.release_date ? -1 : 1));
+      const newOrder = getListOrder(newList);
+      setSortBy(sortOrder.DESCENDING);
+      setInfo(newList);
+      setListOrder(newOrder);
+    }
+    else {
+      setSortBy(sortOrder.UNSORTED);
     }
   }
 
@@ -201,6 +230,8 @@ const ListCreate = ({ location }) => {
               removeFromList={removeFromList}
               listOrder={listOrder}
               updateAfterDrop={updateAfterDrop}
+              sortBy={sortBy}
+              sortByRelease={sortByRelease}
             />
           </Modal>
           <div className="list-create-form-container">

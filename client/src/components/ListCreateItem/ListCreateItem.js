@@ -1,5 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import dateFormat from 'dateformat';
 import './ListCreateItem.css';
 
 const ListCreateItem = ({ id, info, removeFromList, drag }) => {
@@ -26,6 +27,7 @@ const ListCreateItem = ({ id, info, removeFromList, drag }) => {
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="show-list-item">
           <div className="show-list-item-title">
             <h3 title={info.title}>{info.title}</h3>
+            <p>{dateFormat(info.release_date, 'UTC:m/d/yy')}</p>
           </div>
           <div className="show-list-item-remove" onClick={() => removeFromList(info)}>X</div>
         </div>
@@ -33,6 +35,7 @@ const ListCreateItem = ({ id, info, removeFromList, drag }) => {
         <div className="show-list-item">
           <div className="show-list-item-title">
             <h3 title={info.title}>{info.title}</h3>
+            <p>{dateFormat(info.release_date, 'UTC:m/d/yy')}</p>
           </div>
           <div className="show-list-item-remove" onClick={() => removeFromList(info)}>X</div>
         </div>

@@ -24,6 +24,12 @@
   max-height: 33px;
 }
 
+.show-list-item-title p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--darker-white);
+}
+
 .show-list-item-remove {
   padding: 0 1.5rem;
   cursor: pointer;

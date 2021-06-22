@@ -4,7 +4,7 @@ import placeholder from '../../images/placeholder-600x900.jpg';
 import ListCreateItemsContainer from '../ListCreateItemsContainer/ListCreateItemsContainer';
 import './ListCreateSearch.css';
 
-const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToList, removeFromList, listOrder, updateAfterDrop }) => {
+const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToList, removeFromList, listOrder, updateAfterDrop, sortBy, sortByRelease }) => {
   const [show, setShow] = useState(true);
   const searchRef = useRef(null);
 
@@ -14,6 +14,9 @@ const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToLi
     <div className="list-create-search-container">
       <div className="list-create-search-area">
         <input type="text" className="list-create-search-input" ref={searchRef} value={search} onChange={onSearchChange} />
+        <div className="list-create-sort-button-container">
+          <button className="list-create-sort-button" onClick={sortByRelease}>Sort By: <span>{sortBy}</span></button>
+        </div>
         <div className={`list-create-show-list-items ${show ? 'showing' : ''}`}>
           <button className="show-list-items-button" onClick={() => setShow(!show)} />
           <div className="show-list-items-count">
@@ -23,9 +26,9 @@ const ListCreateSearch = ({ info, search, onSearchChange, searchResults, addToLi
         { show &&
           <ListCreateItemsContainer 
             info={info} 
-              removeFromList={removeFromList}
-              listOrder={listOrder}
-              updateAfterDrop={updateAfterDrop}
+            removeFromList={removeFromList}
+            listOrder={listOrder}
+            updateAfterDrop={updateAfterDrop}
           />
         }
       </div>
