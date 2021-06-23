@@ -79,6 +79,7 @@ const ListInfo = ({ location }) => {
     });
 
     const { updatedList } = data;
+
     // items were updated
     if (data.updated) {
       setListItems(updatedList.list);

@@ -17,6 +17,16 @@ const getSeasonEpisodes = async (moviedb_id, season) => {
   }
 }
 
+const getMovie = async (moviedb_id) => {
+  const moviedb = new MovieDb(process.env.MOVIEDB_API_KEY);
+
+  try {
+    return await moviedb.movieInfo(moviedb_id);
+  } catch (e) {
+    return e;
+  }
+}
+
 // Remove unneeded items in moviedb response, add uuid
 const createSeasonEpisodeList = (episodes, media_id) => {
   const episodeList = [];
@@ -106,6 +116,31 @@ const saveList = async (id, newList) => {
   }
 }
 
+const updateList = async (id, newList, compareItems) => {
+  // Update list if current list and new list aren't equal
+  if (!_.isEqual(compareItems, newList)) {
+    const updatedList = await List.findOneAndUpdate({_id: id}, {
+      $set: {
+        updated_items: Date.now(),
+        list: newList,
+      }
+    }, {
+      new: true,
+    });
+    return [updatedList, true];
+  }
+
+  // not equal, update time for last updated items and return false
+  const updatedList = await List.findOneAndUpdate({_id: id}, {
+    $set: {
+      updated_items: Date.now(),
+    }
+  }, {
+    new: true,
+  });
+  return [updatedList, false];
+}
+
 const updateListInfoSingleSeason = async (media, listItems, listId) => {
   const season = listItems[0].season_number;
   const moviedb_id = media[0].moviedb_id;
@@ -136,28 +171,35 @@ const updateListInfoSingleSeason = async (media, listItems, listId) => {
     });
   });
 
-  // Update list if current list and new list aren't equal
-  if (!_.isEqual(compareItems, newList)) {
-    const updatedList = await List.findOneAndUpdate({_id: listId}, {
-      $set: {
-        updated_items: Date.now(),
-        list: newList,
-      }
-    }, {
-      new: true,
+  return await updateList(listId, newList, compareItems);
+}
+
+const updateListInfoMovie = async (media, listItems, listId) => {
+  const moviedb_ids = [];
+  media.forEach(item => moviedb_ids.push(item.moviedb_id));
+  const compareItems = listItems.map(({ _id, ...others }) => others);
+
+  const newList = [];
+  for (let [index, id] of moviedb_ids.entries()) {
+    const newItem = await getMovie(id);
+
+    // return on error
+    if (newItem.statusMessage) return [{}, false];
+
+    newList.push({
+      order: index + 1,
+      title: newItem.title,
+      overview: newItem.overview,
+      poster_path: newItem.poster_path,
+      still_path: null,
+      rank: compareItems[index].rank,
+      media_id: compareItems[index].media_id,
+      season_number: null,
+      episode_number: null,
     });
-    return [updatedList, true];
   }
 
-  // not equal, update time for last updated items and return false
-  const updatedList = await List.findOneAndUpdate({_id: listId}, {
-    $set: {
-      updated_items: Date.now(),
-    }
-  }, {
-    new: true,
-  });
-  return [updatedList, false];
+  return await updateList(listId, newList, compareItems);
 }
 
 // List search
@@ -176,6 +218,12 @@ router.put('/update/:id', async (req, res) => {
     const [updatedList, updated] = await updateListInfoSingleSeason(media, listItems, id);
     return res.send({ updatedList, updated });
   }
+
+  if (listType === listTypes.MOVIE) {
+    const [updatedList, updated] = await updateListInfoMovie(media, listItems, id);
+    return res.send({ updatedList, updated });
+  }
+
   return res.send('List type hasn\'t been implemented yet.');
 });
 
