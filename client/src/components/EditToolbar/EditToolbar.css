@@ -37,6 +37,25 @@
   line-height: 35px;
 }
 
+.set-episode-rank-movie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 35px;
+  max-height: 35px;
+}
+
+.set-episode-rank-movie-title {
+  max-height: 35px;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 .set-episode-rank-episode-title {
   font-size: 1.6rem;
   display: -webkit-box;
@@ -141,5 +160,9 @@
   .set-episode-rank-no-episode {
     height: 45px;
     line-height: 45px;
+  }
+
+  .set-episode-rank-movie-title {
+    max-height: 45px;
   }
 }

@@ -3,7 +3,16 @@ import './EditToolbar.css'
 
 const EditToolbar = ({ order, rank, title, episode_number, updateSelectedListItem, saveChanges, discardChanges }) => {
   const episode = () => {
-    if (isNaN(order) || order === null) return (<p className="set-episode-rank-no-episode">No episode selected</p>)
+    if (isNaN(order) || order === null) return (<p className="set-episode-rank-no-episode">Nothing selected</p>)
+
+    // Movie
+    if (episode_number === null) return (
+      <div className="set-episode-rank-movie">
+        <p className="set-episode-rank-movie-title" title={title}>{title}</p>
+      </div>
+    )
+
+    // TV Episode
     return (
       <>
         <p className="set-episode-rank-episode-number">Episode {episode_number}</p>

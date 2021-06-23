@@ -3,6 +3,20 @@ import './AddListItems.css'
 
 const AddListItems = ({ getRemoveListItem, removeListItemInfo, removeListItem, addListItem, newListItemWarning, setNewListItemWarning }) => {
   const { order, title, rank, episode_number } = removeListItemInfo.list_item_info;
+
+  const episode = () => {
+    if (episode_number === null) return (
+      <p className="add-list-items-confirmation-info-episode-title">{title}</p>
+    )
+
+    return (
+      <>
+        <p className="add-list-items-confirmation-info-episode-number">Episode {episode_number}</p>
+        <p className="add-list-items-confirmation-info-episode-title">{title}</p>
+      </>
+    )
+  }
+
   return (
     <div className="add-list-items">
       <h3>Add/Remove<br/>List Items</h3>
@@ -15,8 +29,7 @@ const AddListItems = ({ getRemoveListItem, removeListItemInfo, removeListItem, a
           <div className="add-list-items-confirmation">
             <p className="add-list-items-confirmation-top">Confirm removal</p>
             <div className="add-list-items-confirmation-info">
-              <p className="add-list-items-confirmation-info-episode-number">Episode {episode_number}</p>
-              <p className="add-list-items-confirmation-info-episode-title">{title}</p>
+              {episode()}
             </div>
             <div className="add-list-items-confirmation-buttons">
               <button className="add-list-items-yes" onClick={() => removeListItem(true, order, rank)}>YES</button>
