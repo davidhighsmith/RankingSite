@@ -9,106 +9,12 @@ import './Lists.css';
 import { instance as axios } from '../../utils/axios';
 
 const Lists = ({ location }) => {
-  // TODO: Remove values after finished working on this page
-  const [topBannerInfo, setTopBannerInfo] = useState({
-    title: 'Brooklyn Nine-Nine',
-    subtitle: 'Season 1'
-  });
+  const [topBannerInfo, setTopBannerInfo] = useState({});
   const [description, setDescription] = useState('');
   const [listType, setListType] = useState('');
   const [media, setMedia] = useState([]);
   const [updatedItems, setUpdatedItems] = useState('');
-  // TODO: Remove values after finished working on this page
-  const [listItems, setListItems] = useState([
-    {
-      uuid: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 1,
-      title: 'Pilot',
-      overview: 'Detective Jake Peralta is a talented, but carefree police detective at Brooklyn\'s 99th precinct who, along with his eclectic group of colleagues, are used to having a lax captain around the office. However, when tightly-wound Captain Ray Holt takes over, he is determined to make this dysfunctional group of detectives into the best precinct in Brooklyn.',
-      still_path: 'https://image.tmdb.org/t/p/w500/zBDTEJf7TiqaMI2VdQQSelJ67GA.jpg',
-      rank: 6,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 1,
-    },
-    {
-      uuid: '2b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 2,
-      title: 'The Tagger',
-      overview: 'When Jake is late for roll call, Captain Ray Holt assigns him to a graffiti case that Jake feels is below his level. However, when the culprit turns out to be the Deputy Commissioner’s son, the case becomes a major problem. Meanwhile, Gina’s psychic friend visits the precinct and gets inside Charles.',
-      still_path: 'https://image.tmdb.org/t/p/w500/j7L0GDSXWmKaZ1nlxEOoA3m7z7p.jpg',
-      rank: 7,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 2,
-    },
-    {
-      uuid: '3b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 3,
-      title: 'The Slump',
-      overview: 'When Jake starts accumulating unsolved cases, the other detectives worry his losing streak will rub off on them; Amy, Rosa and Gina run a program for at-risk youth; Boyle helps Sergeant Jeffords with a case.',
-      still_path: 'https://image.tmdb.org/t/p/w500/o2K9lcwhcvWc0kQDzgXzNXINVU9.jpg',
-      rank: 5,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 3,
-    },
-    {
-      uuid: '4b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 4,
-      title: 'M.E. Time',
-      overview: 'Much to the team’s annoyance, Jake hits on an attractive medical examiner, Dr. Rossi at a crime scene and holds up the autopsy report. He learns his lesson when Dr. Rossi turns out to be more than he bargained for. Meanwhile, Amy’s purse-snatching case is stalled when the sketch artist is out sick, but she discovers that Sgt. Jeffords has hidden artistic talents.',
-      still_path: 'https://image.tmdb.org/t/p/w500/9dozcGhSyLHMVp8pFUA45UwVIjN.jpg',
-      rank: 2,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 4,
-    },
-    {
-      uuid: '5b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 5,
-      title: 'The Vulture',
-      overview: 'A detective from Major Crimes takes over Jake\'s nearly solved murder case and steals his thunder.',
-      still_path: 'https://image.tmdb.org/t/p/w500/qaG1aJWVRXpSd1WDyicHLnYFGJh.jpg',
-      rank: 3,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 5,
-    },
-    {
-      uuid: '6b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 6,
-      title: 'Halloween',
-      overview: 'It\'s Halloween night, a busy time of the year for any police precinct. Amy detests the holiday, and is not thrilled when she has to don a costume to go undercover on street patrol with Charles. Back at the precinct, Jake bets Captain Holt that he can steal his Medal of Valor before midnight, which results in him bringing out some costumes of his own.',
-      still_path: 'https://image.tmdb.org/t/p/w500/41wJeO3WBgKxzEmI8BrsLHPq2W5.jpg',
-      rank: 1,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 6,
-    },
-    {
-      uuid: '7b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 7,
-      title: '48 Hours',
-      overview: 'When Jake makes an arrest without a lot of proof, he only has 48 hours to collect evidence, or else the "perp" will be released. After his unsuccessful interrogation of the suspect, Jake forces his co-workers to spend their weekend helping him crack the case. So, while the team is stuck at the precinct, Charles judges a pie contest between Gina and Rosa, and Holt helps Terry look better in the eyes of his in-laws.',
-      still_path: 'https://image.tmdb.org/t/p/w500/gjpwzl6DSkbZD5Co1lfbzuLYvZP.jpg',
-      rank: 4,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 7,
-    },
-    {
-      uuid: '8b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed',
-      order: 8,
-      title: 'Old School',
-      overview: 'Jake gets to spend the day with his hero, a former crime reporter; Terry and Charles work with Rosa on how she comes across on the witness stand.',
-      still_path: 'https://image.tmdb.org/t/p/w500/uRjBnK21QqTAVs7LcLwjrGRlxnq.jpg',
-      rank: null,
-      media_id: 'wegergtht',
-      season_number: 1,
-      episode_number: 8,
-    },
-  ]);
+  const [listItems, setListItems] = useState([]);
   const [dumbyListItems, setDumbyListItems] = useState([]);
   const [dumbyUnrankedItems, setDumbyUnrankedItems] = useState([]);
   const [listOrder, setListOrder] = useState([]);
@@ -134,6 +40,7 @@ const Lists = ({ location }) => {
   const [newListItemWarning, setNewListItemWarning] = useState(false);
   const [keyDown, setKeyDown] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showInfo, setShowInfo] = useState([]);
   const { id } = useParams();
   const history = useHistory();
   const { state } = location;
@@ -141,7 +48,10 @@ const Lists = ({ location }) => {
   // immediately call another function to not have a big
   // function above the useEffects
   const handleKeyDownPress = async (e) => {
-    if (keyDown) return;
+    if (keyDown) {
+      e.preventDefault();
+      return;
+    }
     await handleKeyPresses(e);
   }
 
@@ -217,19 +127,43 @@ const Lists = ({ location }) => {
   }
 
   const setListItemToEdit = (e) => {
-    if (!editMode) return;
-
     // Get rank to search dumbyListItems
     const temp_rank = parseInt(e.currentTarget.getElementsByClassName('list-item-rank')[0].innerText.split('#')[1]);
 
     let item;
 
-    for (const i of dumbyListItems) {
-      if (i.rank === temp_rank) {
-        item = i;
-        break;
+    if (editMode) {
+      for (const i of dumbyListItems) {
+        if (i.rank === temp_rank) {
+          item = i;
+          break;
+        }
+      }
+    } else {
+      for (const i of listItems) {
+        if (i.rank === temp_rank) {
+          item = i;
+          break;
+        }
       }
     }
+    
+    // If clicked on info image, add order to showInfo
+    // and return since I don't want the item to be set to edit
+    if (e.target.dataset.info || showInfo.includes(item.order)) {
+      const newShowInfo = [...showInfo];
+      const index = newShowInfo.indexOf(item.order);
+      if (index !== -1)
+        newShowInfo.splice(index, 1);
+      else 
+        newShowInfo.push(item.order);
+      setShowInfo(newShowInfo);
+      return;
+    }
+
+    // Return if not in editMode since rest of logic
+    // depends on being in editMode to work
+    if (!editMode) return;
 
     setSelectedListItem({
       order: item.order,
@@ -378,9 +312,9 @@ const Lists = ({ location }) => {
       // Add edit class to new list item
       // sleep to let the state set
       await sleep(50);
-      handleScroll('add');
+      handleScroll();
       removeEditClass();
-      document.getElementsByClassName('list-item')[getRankedListItemCount() - 1].classList.add('list-item-edit');
+      document.getElementsByClassName('list-item-for-draggable')[getRankedListItemCount() - 1].classList.add('list-item-edit');
       return;
     }
 
@@ -471,47 +405,27 @@ const Lists = ({ location }) => {
     return document.getElementsByClassName('list-item').length;
   }
 
-  const handleScroll = (newRank = 'center') => {
-    // newRank === 'higher', 'lower', 'add', 'center'
-
-    if (newRank === 'add') {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      });
-      return;
-    }
-
+  const handleScroll = () => {
+    // had issues with scrollIntoView center
+    // so made my own version that works
     const listItem = document.querySelector('.list-item-edit');
-    if (newRank === 'center') {
-      listItem.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-      return;
-    }
+    if (!listItem) return;
 
-    const bannerHeight = document.querySelector('.outer-show-container').offsetHeight;
     const listItemHeight = listItem.offsetHeight;
-    const { top: elemTop, bottom: elemBottom } = document.querySelector('.list-item-edit').getBoundingClientRect();
+    const { top: elemTop } = document.querySelector('.list-item-edit').getBoundingClientRect();
     const scrollOffset = window.pageYOffset;
     const windowHeight = window.innerHeight;
 
-    if (newRank === 'higher') {
-        window.scrollTo({
-          top: elemTop + scrollOffset - bannerHeight - listItemHeight - 30,
-          behavior: 'smooth',
-        });
-        return;
-    }
+    // get middle of current item position from top of the screen
+    const fromTopOfScreen = scrollOffset + elemTop + listItemHeight / 2;
+    const halfWindowHeight = windowHeight / 2;
 
-    if (newRank === 'lower') {
-        window.scrollBy({
-          top: elemBottom - windowHeight + listItemHeight + 30, 
-          behavior: 'smooth'
-        });
-        return;
-    }
+    window.scrollTo({
+      top: fromTopOfScreen - halfWindowHeight,
+      behavior: 'smooth',
+    })
+
+    return;
   }
 
   const updateDumbyListItems = (updatedListItem, prevRank) => {
@@ -527,10 +441,8 @@ const Lists = ({ location }) => {
       })
     }
 
-    let newRank;
     // Higher Ranking
     if (prevRank > updatedListItem.rank) {
-      newRank = 'higher';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank < updatedListItem.rank) return;
@@ -547,7 +459,6 @@ const Lists = ({ location }) => {
 
     // Lower Ranking
     if (prevRank < updatedListItem.rank) {
-      newRank = 'lower';
       newList.forEach(li => {
         if (li.rank === null) return;
         if (li.rank > updatedListItem.rank) return;
@@ -567,7 +478,7 @@ const Lists = ({ location }) => {
 
     setListOrder(getOrder);
     setDumbyListItems(newList);
-    handleScroll(newRank);
+    handleScroll();
   }
 
   const updateSelectedListItem = (e) => {
@@ -829,11 +740,36 @@ const Lists = ({ location }) => {
         <div className="outer-show-container">
           <div className="banner-container">
             <ListBanner {...topBannerInfo} />
-            <Controls setEditMode={toggleEditMode} goToInfoPage={goToInfoPage} getRemoveListItem={getRemoveListItem} removeListItemInfo={removeListItemInfo} removeListItem={removeListItem} addListItem={addListItem} newListItemWarning={newListItemWarning} setNewListItemWarning={setNewListItemWarning} editMode={editMode} />
+            <Controls 
+              setEditMode={toggleEditMode} 
+              goToInfoPage={goToInfoPage} 
+              getRemoveListItem={getRemoveListItem} 
+              removeListItemInfo={removeListItemInfo} 
+              removeListItem={removeListItem} 
+              addListItem={addListItem} 
+              newListItemWarning={newListItemWarning} 
+              setNewListItemWarning={setNewListItemWarning} 
+              editMode={editMode} 
+            />
           </div>
         </div>
-        <ListContainer editMode={editMode} setListItemToEdit={setListItemToEdit} listItems={editMode ? dumbyListItems : listItems} listOrder={listOrder} updateAfterDrop={updateAfterDrop} selectedListItem={selectedListItem} />
-        {editMode ? <EditToolbar {...selectedListItem} updateSelectedListItem={updateSelectedListItem} saveChanges={saveChanges} discardChanges={discardChanges} /> : null}
+        <ListContainer 
+          editMode={editMode} 
+          setListItemToEdit={setListItemToEdit} 
+          listItems={editMode ? dumbyListItems : listItems} 
+          listOrder={listOrder} 
+          listType={listType}
+          updateAfterDrop={updateAfterDrop} 
+          selectedListItem={selectedListItem} 
+          showInfo={showInfo}
+        />
+        {editMode ? 
+          <EditToolbar 
+            {...selectedListItem} 
+            updateSelectedListItem={updateSelectedListItem} 
+            saveChanges={saveChanges} 
+            discardChanges={discardChanges} 
+          /> : null}
       </div>
       }
     </>
