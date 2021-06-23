@@ -71,9 +71,9 @@ const ListCreate = ({ location }) => {
 
       newInfoList = arrayMove(newInfoList, oldIndex, newIndex);
       const newOrder = getListOrder(newInfoList);
+      sortUnsorted();
       setInfo(newInfoList);
       setListOrder(newOrder);
-      setSortBy('unsorted');
     }
   }
 
@@ -81,7 +81,7 @@ const ListCreate = ({ location }) => {
     const newList = _.cloneDeep(info);
     if (sortBy === sortOrder.UNSORTED) sortAscending(newList);
     else if (sortBy === sortOrder.ASCENDING) sortDescending(newList);
-    else sortUnsorted();
+    else if (sortBy === sortOrder.DESCENDING) sortAscending(newList);
   }
 
   const updateSort = (list, order) => {
@@ -112,8 +112,6 @@ const ListCreate = ({ location }) => {
     // TODO: selectedSeason for movies would be set to null
     if (listType === listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES && selectedSeason === null) return;
 
-    console.log(info);
-
     const listInfo = {};
     listInfo.items = _.cloneDeep(info);
     if (title !== '') listInfo.title = title.replace(/\s+/g, ' ').trim();
@@ -126,23 +124,19 @@ const ListCreate = ({ location }) => {
       selectedSeason: selectedSeason === null ? null : parseInt(selectedSeason.value),
     }
 
-    console.log('newInfo:', listInfo);
-    console.log('options:', options);
-
     const { data } = await axios.post(`/api/lists`, { info: listInfo, options });
 
-    console.log(data);
-    // history.push({
-    //   pathname: `/lists/${data._id}/info`, 
-    //   state: {
-    //     listItems: data.list,
-    //     topBannerInfo: { title: data.title, subtitle: data.subtitle },
-    //     description: data.description,
-    //     listType: data.list_type,
-    //     media: data.media,
-    //     updatedItems: data.updatedItems,
-    //   }
-    // });
+    history.push({
+      pathname: `/lists/${data._id}/info`, 
+      state: {
+        listItems: data.list,
+        topBannerInfo: { title: data.title, subtitle: data.subtitle },
+        description: data.description,
+        listType: data.list_type,
+        media: data.media,
+        updatedItems: data.updatedItems,
+      }
+    });
   }
 
   const getListTypes = () => {
@@ -220,6 +214,8 @@ const ListCreate = ({ location }) => {
     if (e.target.dataset.modal) setShowModal(false);
   }
 
+  const titlePlaceholder = () => info.length !== 0 ? info[0].title : 'No Title';
+  const subtitletitlePlaceholder = () => selectedSeason !== null ? selectedSeason.label : 'No Subtitle';
   const onTitleChange = (e) => setTitle(e.target.value);
   const onSubtitleChange = (e) => setSubtitle(e.target.value);
   const descriptionChange = (e) => setDescription(e.target.value);
@@ -249,11 +245,11 @@ const ListCreate = ({ location }) => {
               <div className="list-create-form-input-container">
                 {getListTypes()}
                 <label htmlFor="list-create-form-title">Title</label>
-                <input type="text" name="title" id="list-create-form-title" className="list-create-form-text-input" value={redirected && disableTitle ? info[0].title : title} disabled={disableTitle} onChange={onTitleChange} />
+                <input type="text" name="title" id="list-create-form-title" className="list-create-form-text-input" value={redirected && disableTitle ? info[0].title : title} placeholder={titlePlaceholder()} disabled={disableTitle} onChange={onTitleChange} />
               </div>
               <div className="list-create-form-input-container">
                 <label htmlFor="list-create-form-subtitle">Subtitle</label>
-                <input type="text" name="subtitle" id="list-create-form-subtitle" className="list-create-form-text-input" value={subtitle} onChange={onSubtitleChange} />
+                <input type="text" name="subtitle" id="list-create-form-subtitle" className="list-create-form-text-input" value={subtitle} placeholder={subtitletitlePlaceholder()} onChange={onSubtitleChange} />
               </div>
               { listType === listTypes.TV_SINGLE_SHOW_SINGLE_SEASON_EPISODES ?
                 (

@@ -51,9 +51,6 @@
   background-color: var(--background-color-brighter);
 }
 
-
-
-
 .list-info-stats-container {
   display: flex;
   width: 100%;
@@ -145,6 +142,7 @@
 }
 
 .list-info-media-items-img {
+  display: block;
   width: 100%;
 }
 

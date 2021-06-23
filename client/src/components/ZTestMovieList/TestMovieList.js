@@ -570,6 +570,7 @@ const TestMovieList = ({ location }) => {
     // had issues with scrollIntoView center
     // so made my own version that works
     const listItem = document.querySelector('.list-item-edit');
+    if (!listItem) return;
 
     const listItemHeight = listItem.offsetHeight;
     const { top: elemTop } = document.querySelector('.list-item-edit').getBoundingClientRect();

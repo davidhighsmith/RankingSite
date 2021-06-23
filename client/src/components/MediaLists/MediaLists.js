@@ -18,7 +18,7 @@ const MediaLists = ({ lists }) => {
         {lists &&
           lists.map(list => {
             const noMainTitle = noTitleTypes.includes(list.list_type);
-            return <ListCard id={list._id} subtitle={list.subtitle} updated={list.updatedAt} key={list._id} noMainTitle={noMainTitle} />
+            return <ListCard id={list._id} title={list.title} subtitle={list.subtitle} updated={list.updatedAt} key={list._id} noMainTitle={noMainTitle} />
         })
         }
         {/* <ListCard id="2" subtitle="Season 1" updated="2021-05-04" noMainTitle />

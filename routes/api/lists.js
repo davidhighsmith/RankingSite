@@ -256,7 +256,7 @@ router.post('/', async (req, res) => {
       mediaItems.push(item._id);
     });
 
-    let newList = {
+    let newList = new List({
       title: info.title,
       subtitle: info.subtitle,
       description: info.description !== '' ? info.description : 'No description provided.',
@@ -264,7 +264,19 @@ router.post('/', async (req, res) => {
       updated_items: Date.now(),
       media: mediaItems,
       list: createMovieList(info.items)
-    };
+    });
+
+    let media = await Media.find({ '_id': {
+      $in: mediaItems
+    } });
+
+    await newList.save();
+    await media.forEach(async item => {
+      item.lists.push(newList._id);
+      await item.save();
+    });
+
+    newList.media = media;
 
     return res.send(newList);
   }
