@@ -226,7 +226,7 @@ const Lists = ({ location }) => {
     setEditMode(false);
   }
 
-  const getRemoveListItem = () => {
+  const getRemoveListItem = async () => {
     // Nothing happens if there is nothing to remove
     if (dumbyListItems.length === 0) return;
 
@@ -254,6 +254,9 @@ const Lists = ({ location }) => {
       activated: true,
       list_item_info: info
     });
+    // scroll will go to previous selected item if
+    // there is no sleep time added here
+    await sleep(50);
     handleScroll();
   }
 
@@ -412,6 +415,7 @@ const Lists = ({ location }) => {
     if (!listItem) return;
 
     const listItemHeight = listItem.offsetHeight;
+    const bannerHeight = document.querySelector('.banner-container').offsetHeight;
     const { top: elemTop } = document.querySelector('.list-item-edit').getBoundingClientRect();
     const scrollOffset = window.pageYOffset;
     const windowHeight = window.innerHeight;
@@ -421,7 +425,7 @@ const Lists = ({ location }) => {
     const halfWindowHeight = windowHeight / 2;
 
     window.scrollTo({
-      top: fromTopOfScreen - halfWindowHeight,
+      top: fromTopOfScreen - halfWindowHeight - bannerHeight / 2,
       behavior: 'smooth',
     })
 
