@@ -7,6 +7,9 @@ import EditToolbar from '../EditToolbar/EditToolbar';
 import Controls from '../Controls/Controls';
 import './Lists.css';
 import { instance as axios } from '../../utils/axios';
+import { afterDrop, getOrder } from '../../utils/dragNDropHelpers';
+
+const LIST_ORDER = 'order';
 
 const Lists = ({ location }) => {
   const [topBannerInfo, setTopBannerInfo] = useState({});
@@ -174,12 +177,6 @@ const Lists = ({ location }) => {
     })
   }
 
-  const getNewOrder = (list) => {
-    let newOrder = [];
-    list.forEach(item => newOrder.push(item.order.toString()));
-    return newOrder;
-  }
-
   const getDumbyInfo = () => {
     const temp = _.cloneDeep(listItems);
     let dumbyList = [];
@@ -194,7 +191,7 @@ const Lists = ({ location }) => {
     dumbyList.sort((a, b) => a.rank > b.rank ? 1 : -1);
     dumbyUnranked.sort((a, b) => a.order > b.order ? 1 : -1);
 
-    order = getNewOrder(dumbyList);
+    order = getOrder(dumbyList, LIST_ORDER);
 
     return [dumbyList, dumbyUnranked, order];
   }
@@ -299,11 +296,11 @@ const Lists = ({ location }) => {
       tempUnranked.splice(nextIndex, 1);
 
       // Get the new list order for draggable
-      const getOrder = getNewOrder(list);
+      const newOrder = getOrder(list, LIST_ORDER);
 
       setDumbyListItems(list);
       setDumbyUnrankedItems(tempUnranked);
-      setListOrder(getOrder);
+      setListOrder(newOrder);
       setSelectedListItem({
         order: tempItem.order,
         rank: tempItem.rank,
@@ -358,7 +355,7 @@ const Lists = ({ location }) => {
     tempUnranked.push(unrankedItem);
 
     // get new list order for draggables
-    const getOrder = getNewOrder(list);
+    const newOrder = getOrder(list, LIST_ORDER);
 
     // base new selected item object
     // will stay empty if the only item in the list is removed
@@ -398,7 +395,7 @@ const Lists = ({ location }) => {
 
     setDumbyListItems(list);
     setDumbyUnrankedItems(tempUnranked);
-    setListOrder(getOrder);
+    setListOrder(newOrder);
     setBaseRemoveListItemInfo();
     setRemoving(false);
     handleScroll();
@@ -478,9 +475,9 @@ const Lists = ({ location }) => {
     }
 
     newList.sort((a, b) => a.rank > b.rank ? 1 : -1);
-    const getOrder = getNewOrder(newList);
+    const newOrder = getOrder(newList, LIST_ORDER);
 
-    setListOrder(getOrder);
+    setListOrder(newOrder);
     setDumbyListItems(newList);
     handleScroll();
   }
@@ -650,52 +647,17 @@ const Lists = ({ location }) => {
   
   const updateAfterDrop = (e) => {
     if (removeListItemInfo.activated) return;
-    const { active, over } = e;
 
-    if (!over) return;
+    const [newList, newOrder, changes, newRank] = afterDrop(e, dumbyListItems, LIST_ORDER, true);
+    if (!changes) return;
 
-    if (active.id !== over.id) {
-      const oldIndex = dumbyListItems.findIndex(
-        item => item.order === parseInt(active.id, 10)
-      );
-      const newIndex = dumbyListItems.findIndex(
-        item => item.order === parseInt(over.id, 10)
-      );
-
-      const newList = [];
-
-      // dragged item rank decreasing
-      if (oldIndex < newIndex) {
-        dumbyListItems.forEach((item, index) => {
-          if (index > newIndex) newList.push({ ...item });
-          if (index < oldIndex) newList.push({ ...item });
-          if (index === oldIndex) newList.push({ ...item, rank: newIndex + 1 });
-          if (index <= newIndex && index > oldIndex)
-            newList.push({ ...item, rank: index });
-        });
-      }
-      // dragged item rank increasing
-      if (oldIndex > newIndex) {
-        dumbyListItems.forEach((item, index) => {
-          if (index < newIndex) newList.push({ ...item });
-          if (index > oldIndex) newList.push({ ...item });
-          if (index === oldIndex) newList.push({ ...item, rank: newIndex + 1 });
-          if (index >= newIndex && index < oldIndex)
-            newList.push({ ...item, rank: index + 2 });
-        });
-      }
-
-      newList.sort((a, b) => (a.rank > b.rank ? 1 : -1));
-      const orderNumbers = getNewOrder(newList);
-
-      setSelectedListItem({
-        ...selectedListItem,
-        rank: newIndex + 1
-      })
-      setDumbyListItems(newList);
-      setListOrder(orderNumbers);
-      handleScroll();
-    }
+    setSelectedListItem({
+      ...selectedListItem,
+      rank: newRank
+    })
+    setDumbyListItems(newList);
+    setListOrder(newOrder);
+    handleScroll();
   }
 
   const saveChanges = async () => {

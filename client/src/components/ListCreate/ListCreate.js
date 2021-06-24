@@ -8,6 +8,7 @@ import Modal from '../Modal/Modal';
 import ListCreateSearch from '../ListCreateSearch/ListCreateSearch';
 import listTypes from '../../utils/listTypes';
 import { instance as axios } from '../../utils/axios';
+import { afterDrop, getOrder } from '../../utils/dragNDropHelpers';
 import './ListCreate.css';
 
 const sortOrder = {
@@ -15,6 +16,8 @@ const sortOrder = {
   ASCENDING: 'oldest to newest',
   DESCENDING: 'newest to oldest',
 }
+
+const LIST_ORDER = 'moviedb_id';
 
 const ListCreate = ({ location }) => {
   const [loading, setLoading] = useState(true);
@@ -39,7 +42,7 @@ const ListCreate = ({ location }) => {
     if (state) {
       let arr = [];
       arr.push({...state.info});
-      const order = getListOrder(arr);
+      const order = getOrder(arr, LIST_ORDER);
       setInfo(arr);
       setListType(state.listType);
       setMediaType(state.info.media_type);
@@ -53,28 +56,13 @@ const ListCreate = ({ location }) => {
     setLoading(false);
   }, [state]);
 
-  const getListOrder = (list) => {
-    let newOrder = [];
-    list.forEach(item => newOrder.push(item.moviedb_id.toString()));
-    return newOrder;
-  }
-
   const updateAfterDrop = (e) => {
-    const {active, over} = e;
+    const [newList, newOrder, changed] = afterDrop(e, info, LIST_ORDER);
+    if (!changed) return;
 
-    if (!over) return;
-    
-    if (active.id !== over.id) {
-      let newInfoList = _.cloneDeep(info);
-      const oldIndex = newInfoList.findIndex(i => i.moviedb_id === parseInt(active.id));
-      const newIndex = newInfoList.findIndex(i => i.moviedb_id === parseInt(over.id));
-
-      newInfoList = arrayMove(newInfoList, oldIndex, newIndex);
-      const newOrder = getListOrder(newInfoList);
-      sortUnsorted();
-      setInfo(newInfoList);
-      setListOrder(newOrder);
-    }
+    sortUnsorted();
+    setInfo(newList);
+    setListOrder(newOrder);
   }
 
   const sortByRelease = () => {
@@ -85,7 +73,7 @@ const ListCreate = ({ location }) => {
   }
 
   const updateSort = (list, order) => {
-    const newOrder = getListOrder(list);
+    const newOrder = getOrder(list, LIST_ORDER);
     setSortBy(order);
     setInfo(list);
     setListOrder(newOrder);
@@ -186,7 +174,7 @@ const ListCreate = ({ location }) => {
     if (sortBy === sortOrder.ASCENDING) sortAscending(newInfo);
     else if (sortBy === sortOrder.DESCENDING) sortDescending(newInfo);
     else {
-      const newOrder = getListOrder(newInfo);
+      const newOrder = getOrder(newInfo, LIST_ORDER);
       setInfo(newInfo);
       setListOrder(newOrder);
     }
@@ -204,7 +192,7 @@ const ListCreate = ({ location }) => {
 
     if (typeof index !== "undefined") {
       newInfo.splice(index, 1);
-      const newOrder = getListOrder(newInfo);
+      const newOrder = getOrder(newInfo, LIST_ORDER);
       setInfo(newInfo);
       setListOrder(newOrder);
     }
