@@ -405,6 +405,15 @@ const Lists = ({ location }) => {
     return document.getElementsByClassName('list-item').length;
   }
 
+  const getBannerHeight = () => {
+    const banner = document.querySelector('.banner-container');
+    const bannerHeight = banner.offsetHeight;
+    const styles = getComputedStyle(banner);
+    const marginTop = parseInt(styles.marginTop);
+    const marginBottom = parseInt(styles.marginBottom);
+    return bannerHeight + marginBottom + marginTop;
+  }
+
   const handleScroll = () => {
     // had issues with scrollIntoView center
     // so made my own version that works
@@ -412,7 +421,7 @@ const Lists = ({ location }) => {
     if (!listItem) return;
 
     const listItemHeight = listItem.offsetHeight;
-    const bannerHeight = document.querySelector('.banner-container').offsetHeight;
+    const bannerHeight = getBannerHeight();
     const { top: elemTop } = document.querySelector('.list-item-edit').getBoundingClientRect();
     const scrollOffset = window.pageYOffset;
     const windowHeight = window.innerHeight;
