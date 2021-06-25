@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import _ from 'lodash';
-import { arrayMove } from '@dnd-kit/sortable';
 import Nav from '../Nav/Nav';
 import Modal from '../Modal/Modal';
 import ListCreateSearch from '../ListCreateSearch/ListCreateSearch';

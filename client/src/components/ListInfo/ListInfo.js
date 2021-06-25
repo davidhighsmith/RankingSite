@@ -3,16 +3,19 @@ import { withRouter, useParams, useHistory, Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import { baseImage } from '../../utils/theMovieDBBaseURL';
 import placeholder from '../../images/placeholder-600x900.jpg';
+import LoadingIcon from '../../images/LoadingIcon';
 import Nav from '../Nav/Nav';
 import './ListInfo.css';
 import { instance as axios } from '../../utils/axios';
 
 const ListInfo = ({ location }) => {
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const [topBannerInfo, setTopBannerInfo] = useState({});
   const [listItems, setListItems] = useState({});
   const [media, setMedia] = useState([]);
   const [updatedItems, setUpdatedItems] = useState('');
+  const [attemptedUpdate, setAttemptedUpdate] = useState('');
   const [listType, setListType] = useState('');
   const [description, setDescription] = useState('');
   const { id } = useParams();
@@ -72,6 +75,16 @@ const ListInfo = ({ location }) => {
   }, 0);
 
   const updateListItems = async () => {
+    // Only doing it this way since only 1 person will be using this app
+    if (attemptedUpdate !== '') {
+      const time = Date.now();
+      const lastAttemptedUpdate = new Date(attemptedUpdate);
+      const timeDiff = Math.floor((time - lastAttemptedUpdate) / 1000);
+      if (timeDiff < 10) return;
+    }
+
+    setUpdating(true);
+    setAttemptedUpdate(Date.now());
     const { data } = await axios.put(`/api/lists/update/${id}`, {
       media,
       listType,
@@ -102,6 +115,7 @@ const ListInfo = ({ location }) => {
     else {
       setUpdatedItems(updatedList.updated_items);
     }
+    setUpdating(false);
   }
 
   return (
@@ -148,7 +162,7 @@ const ListInfo = ({ location }) => {
             </div>
           </div>
 
-          <button className="list-info-update-button" onClick={updateListItems}>Update</button>
+          <button className="list-info-update-button" onClick={updateListItems}>{updating ? <LoadingIcon width={70} height={70} /> : 'Update'}</button>
         </div>
 
 

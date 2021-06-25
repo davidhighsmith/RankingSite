@@ -113,11 +113,20 @@
   border: 0.4rem solid transparent;
   background-color: var(--container-color);
   transition: 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .list-info-update-button:hover {
   background-color: var(--background-color-brighter);
   border: 0.4rem solid var(--container-color);
+}
+
+.list-info-update-button .icon {
+  transform: scale(2);
+  animation: rotate 2s infinite linear;
+  stroke: var(--darker-heading);
 }
 
 .list-info-media-items-container {
@@ -153,4 +162,13 @@
 
 .list-info-media-item .media-search-item-title {
   font-size: 2.2rem;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
