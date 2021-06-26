@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { withRouter, useParams, useHistory, Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
+import listTypes from '../../utils/listTypes';
 import { baseImage } from '../../utils/theMovieDBBaseURL';
 import placeholder from '../../images/placeholder-600x900.jpg';
 import LoadingIcon from '../../images/LoadingIcon';
 import Nav from '../Nav/Nav';
+import Modal from '../Modal/Modal';
 import './ListInfo.css';
 import { instance as axios } from '../../utils/axios';
 
@@ -18,6 +20,7 @@ const ListInfo = ({ location }) => {
   const [attemptedUpdate, setAttemptedUpdate] = useState('');
   const [listType, setListType] = useState('');
   const [description, setDescription] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
   const history = useHistory();
   const { state } = location;
@@ -118,11 +121,18 @@ const ListInfo = ({ location }) => {
     setUpdating(false);
   }
 
+  const closeModal = (e) => {
+    if (e.target.dataset.modal) setShowModal(false);
+  }
+
   return (
     <>
     {loading ? <div>Loading</div> : 
-      <div>
-      <Nav active="lists" />
+      <>
+        <Nav active="lists" />
+        <Modal showModal={showModal} closeModal={closeModal} showX={true}>
+          Test
+        </Modal>
 
       <div className="list-info-container">
 
@@ -162,9 +172,14 @@ const ListInfo = ({ location }) => {
             </div>
           </div>
 
-          <button className="list-info-update-button" onClick={updateListItems}>{updating ? <LoadingIcon width={70} height={70} /> : 'Update'}</button>
+          <button className="list-info-update-button" onClick={updateListItems}>{updating ? <LoadingIcon width={70} height={70} /> : 'Update Info'}</button>
         </div>
 
+        {listType === listTypes.MOVIE && 
+          <div className="list-info-update-list-container">
+            <div className="list-info-update-list-button" onClick={() => setShowModal(true)}>Update List Items</div>
+          </div>
+        }
 
         <div className="list-info-media-items-container">
           <h3 className="list-info-media-items-title">Media in this list</h3>
@@ -185,7 +200,7 @@ const ListInfo = ({ location }) => {
 
       </div>
 
-    </div>
+    </>
     }
     </>
   )

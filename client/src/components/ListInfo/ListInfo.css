@@ -94,7 +94,8 @@
   text-transform: uppercase;
 }
 
-.list-info-update-container {
+.list-info-update-container,
+.list-info-update-list-container {
   display: flex;
   margin-top: 2rem;
 }
@@ -127,6 +128,23 @@
   transform: scale(2);
   animation: rotate 2s infinite linear;
   stroke: var(--darker-heading);
+}
+
+.list-info-update-list-container {
+  justify-content: center;
+}
+
+.list-info-update-list-button {
+  background-color: var(--container-color);
+  line-height: 1;
+  font-size: 2.6rem;
+  padding: 3.5rem 3rem;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.list-info-update-list-button:hover {
+  background-color: var(--background-color-brighter);
 }
 
 .list-info-media-items-container {
