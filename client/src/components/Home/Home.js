@@ -32,8 +32,6 @@ const Home = () => {
           {loading ? null :
           <>
             {lists.map(list => <ListCard id={list._id} title={list.title} subtitle={list.subtitle} updated={list.updatedAt} key={list._id} />)}
-            <ListCard id="2" title="Invincible" subtitle="Season 1" updated="2021-05-04" />
-            <ListCard id="3" title="Marvel Cinematic Universe" subtitle='' updated="2021-05-04" />
           </>
           }
         </div>
