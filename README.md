@@ -17,7 +17,7 @@ Ranking lists for TV Shows currently works. Movie ranking lists can be created b
 
  ***
 
- This project has many issues that would need to be corrected if I were to ever come back it including:
+ This project has many issues that would need to be corrected if I were to ever come back to it including:
 
  * Better state management (React Context or Redux). Currently passing state around React Router which has turned into a mess.
  * Database models need changed if it were to become a site more than one person uses to make lists.
